@@ -1,0 +1,5 @@
+python generate_dataset_file.py -i /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512 -o /space/ariyanzarei/charcoal_dry_rot/datasets -s 512
+python generate_dataset_file.py -i /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512 -o /space/ariyanzarei/charcoal_dry_rot/datasets -s 256
+python generate_dataset_file.py -i /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512 -o /space/ariyanzarei/charcoal_dry_rot/datasets -s 128
+python generate_dataset_file.py -i /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512 -o /space/ariyanzarei/charcoal_dry_rot/datasets -s 64
+python generate_dataset_file.py -i /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512 -o /space/ariyanzarei/charcoal_dry_rot/datasets -s 32
