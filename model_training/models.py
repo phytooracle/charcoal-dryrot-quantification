@@ -4,6 +4,7 @@ import torch.nn as nn
 import pytorch_lightning as pl
 import torch
 import torchmetrics
+from torchmetrics.functional import precision_recall
 from torch.utils.data import DataLoader
 
 
@@ -13,6 +14,7 @@ class BaseClassificationClass(pl.LightningModule):
         self.hparams.update(hparams)
         self.loss_fn = nn.BCEWithLogitsLoss()
         self.accuracy_fn = torchmetrics.Accuracy()
+        self.f1_fn = torchmetrics.F1Score()
         self.save_hyperparameters()
 
     def _build_dataloader(self, ds_path, set_type, shuff=True):
@@ -59,8 +61,13 @@ class BaseClassificationClass(pl.LightningModule):
         prediction = self(x)
         loss = self.loss_fn(prediction, y)
         acc = self.accuracy_fn(prediction, y.int())
+        precision, recall = precision_recall(prediction, y.int())
+        f1_score = self.f1_fn(prediction, y.int())
         self.log("val_loss", loss, prog_bar=True)
         self.log("val_acc", acc, prog_bar=True)
+        self.log("val_prec", precision, prog_bar=True)
+        self.log("val_recall", recall, prog_bar=True)
+        self.log("val_f1", f1_score, prog_bar=True)
         return loss
 
 
