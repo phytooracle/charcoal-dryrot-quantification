@@ -2,6 +2,7 @@ import GPUtil
 import pandas as pd
 import subprocess
 import argparse
+import socket
 
 
 def get_args():
@@ -37,24 +38,31 @@ def main():
     path = args.path
 
     try:
+        system = socket.gethostname().split(".")[0]
+        order = "last" if system == "laplace" else "first"
         available_gpu = GPUtil.getFirstAvailable(
-            order="first",
-            maxLoad=0.01,
-            maxMemory=0.01,
+            order=order,
+            maxLoad=0.5,
+            maxMemory=0.5,
             attempts=1,
             interval=900,
             verbose=False,
         )
+        if system == "laplace" and available_gpu[0] == 0:
+            print(
+                ":: No GPUs/GPU computation power available. GPU 0 in laplace does not work..."
+            )
+            return
     except:
-        print(":: No GPUs available...")
+        print(":: No GPUs/GPU computation power available...")
     else:
         next_experiment = get_next_experiment(path)
 
         if next_experiment == -1:
             print(":: No more experiments to run.")
         else:
-            print(f":: Running experiment {next_experiment} on GPU {available_gpu[0]}")
-            process_no = subprocess.Popen(
+            output_name = f"Exp_{next_experiment}_GPU_{available_gpu[0]}_{system}.out"
+            process_info = subprocess.Popen(
                 " ".join(
                     [
                         "nohup",
@@ -66,11 +74,14 @@ def main():
                         path,
                         "-e",
                         str(next_experiment),
-                        ">/dev/null 2>&1",
+                        f"> {output_name} 2>&1 &",
                     ]
                 ),
                 close_fds=True,
                 shell=True,
+            )
+            print(
+                f":: Running experiment {next_experiment} on GPU {available_gpu[0]}, PID: {process_info.pid}."
             )
 
 

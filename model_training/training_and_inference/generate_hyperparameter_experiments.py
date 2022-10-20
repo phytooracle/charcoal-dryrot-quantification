@@ -29,6 +29,15 @@ def get_args():
         required=True,
     )
 
+    parser.add_argument(
+        "-t",
+        "--type",
+        help="Type of experiment, i.e. classification (input 'c') or segmentation (input 's').",
+        metavar="name",
+        required=True,
+        type=str,
+    )
+
     return parser.parse_args()
 
 
@@ -36,23 +45,19 @@ def generate_hyperparameter_experiments_classification():
 
     model_names = [
         "EfficientNetB3",
-        "MobileNetV3Large",
-        "MobileNetV3Small",
         "EfficientNetB4",
-        "MobileNetV3SmallCustom",
-        "ResNet",
     ]
-    # patch_sizes = [32, 64, 128, 256, 512]
-    # optimizers = ["Adam"]
-    # learning_rates = [1e-2, 1e-3, 1e-4]
-    # epochs = [1]
-    # batch_sizes = [4, 8, 16]
-
-    patch_sizes = [256]
+    patch_sizes = [32, 64, 128, 256, 512]
     optimizers = ["Adam"]
     learning_rates = [1e-3]
     epochs = [50]
     batch_sizes = [8]
+
+    # patch_sizes = [256]
+    # optimizers = ["Adam"]
+    # learning_rates = [1e-3]
+    # epochs = [50]
+    # batch_sizes = [8]
 
     experiments = list(
         itertools.product(
@@ -80,9 +85,59 @@ def generate_hyperparameter_experiments_classification():
     return all_experiments
 
 
+def generate_hyperparameter_experiments_segmentation():
+
+    model_names = ["FCN", "DeepLabV3"]
+    patch_sizes = [256]
+    optimizers = ["Adam"]
+    learning_rates = [1e-3]
+    epochs = [50]
+    batch_sizes = [8]
+    loss_fn = ["dice", "bce"]
+
+    experiments = list(
+        itertools.product(
+            patch_sizes,
+            optimizers,
+            learning_rates,
+            epochs,
+            batch_sizes,
+            model_names,
+            loss_fn,
+        )
+    )
+
+    all_experiments = []
+
+    for i, e in enumerate(experiments):
+        experiment_values = list(e)
+        json_value = {
+            "experiment_number": i,
+            "model_name": e[5],
+            "batch_size": experiment_values[4],
+            "data": f"/space/ariyanzarei/charcoal_dry_rot/datasets/h5_datasets/2022-04-18_{e[0]}X{e[0]}/segmentation_dataset.h5",
+            "optimizer": experiment_values[1],
+            "learning_rate": experiment_values[2],
+            "pre_trained": True,
+            "epochs": experiment_values[3],
+            "loss_function": experiment_values[6],
+        }
+        all_experiments.append(json_value)
+
+    print(":: Number of total experiments: " + str(len(experiments)))
+    return all_experiments
+
+
 def main():
     args = get_args()
-    experiments = generate_hyperparameter_experiments_classification()
+
+    if args.type == "c":
+        experiments = generate_hyperparameter_experiments_classification()
+    elif args.type == "s":
+        experiments = generate_hyperparameter_experiments_segmentation()
+    else:
+        print(":: Invalid type provided. ")
+        return
 
     df = pd.DataFrame.from_records(experiments)
     df["version"] = None
@@ -91,7 +146,9 @@ def main():
     df["validation_recall"] = None
     df["validation_f1"] = None
 
-    df.to_csv(os.path.join(args.path, f"{args.name}_config_and_results_file.csv"))
+    df.to_csv(
+        os.path.join(args.path, f"{args.name}_config_and_results_file.csv"), index=False
+    )
 
 
 main()

@@ -53,6 +53,13 @@ def get_args():
         default="/space/ariyanzarei/charcoal_dry_rot/models/model_checkpoints",
     )
 
+    parser.add_argument(
+        "-d",
+        "--debug",
+        help="Whether this is debug or real run.",
+        action="store_true",
+    )
+
     return parser.parse_args()
 
 
@@ -85,7 +92,7 @@ def test_and_save_results(trainer, experiment_path, experiment_no):
             "val_f1"
         ]
 
-        df.to_csv(experiment_path)
+        df.to_csv(experiment_path, index=False)
 
         print(":: Successfully saved results. ")
     except:
@@ -97,10 +104,10 @@ def log_version_in_file(experiment_path, experiment_no, trainer):
     df.loc[(df.experiment_number == experiment_no), "version"] = int(
         trainer.logger.version
     )
-    df.to_csv(experiment_path)
+    df.to_csv(experiment_path, index=False)
 
 
-def train(debug):
+def train():
     args = get_args()
     hparams = read_hparams(args.path, args.experiment)
 
@@ -118,8 +125,7 @@ def train(debug):
     )
 
     early_stopping_callback = EarlyStopping(monitor="val_loss", mode="min", patience=20)
-
-    if debug:
+    if args.debug:
         trainer = pl.Trainer(
             accelerator="gpu",
             devices=[args.gpu],
@@ -144,4 +150,4 @@ def train(debug):
     test_and_save_results(trainer, args.path, args.experiment)
 
 
-train(False)
+train()
