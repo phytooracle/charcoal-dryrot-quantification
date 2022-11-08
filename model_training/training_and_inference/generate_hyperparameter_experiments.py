@@ -88,12 +88,12 @@ def generate_hyperparameter_experiments_classification():
 def generate_hyperparameter_experiments_segmentation():
 
     model_names = ["FCN", "DeepLabV3"]
-    patch_sizes = [256]
+    patch_sizes = [32, 64, 128, 256, 512]
     optimizers = ["Adam"]
     learning_rates = [1e-3]
     epochs = [50]
     batch_sizes = [8]
-    loss_fn = ["dice", "bce"]
+    loss_fn = ["dice"]
 
     experiments = list(
         itertools.product(

@@ -233,6 +233,8 @@ def quantify_all_images(
 
     results = []
     for i, file in enumerate(files):
+        if "IMG_0228" not in file:
+            continue
         print("----------------------------------")
         print(f":: {i}/{len(files)}")
         result = quantify_single_image(
