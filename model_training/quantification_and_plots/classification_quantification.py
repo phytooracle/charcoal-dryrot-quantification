@@ -6,6 +6,7 @@ import json
 import pandas as pd
 import argparse
 import sys
+import datetime
 
 sys.path.append("..")
 from PIL import Image
@@ -133,6 +134,7 @@ def mask_contains_dryrot(mask):
 
 
 def quantify_single_image(image_path, label_path, model, save_path, p_size):
+    list_patch_times = []
     patches, img = generate_patches(image_path, label_path, p_size, p_size)
 
     GT_mask = img.copy()
@@ -171,7 +173,11 @@ def quantify_single_image(image_path, label_path, model, save_path, p_size):
                 -1,
             )
 
+        start_time = datetime.datetime.now()
         classification_prediction = model.predict_single_image(patches[i]["patch"])
+        end_time = datetime.datetime.now()
+        list_patch_times.append((end_time - start_time).total_seconds())
+
         if classification_prediction == 1:
             PR_label = True
             pr_dryrot_count += 1
@@ -221,6 +227,7 @@ def quantify_single_image(image_path, label_path, model, save_path, p_size):
         "FP": FP,
         "TN": TN,
         "FN": FN,
+        "PTimes": list_patch_times,
     }
 
 
@@ -251,6 +258,8 @@ def quantify_all_images(
     for i, file in enumerate(files):
         # if "IMG_0228" not in file:
         #     continue
+        # if i >= 2:
+        #     break
         print("----------------------------------")
         print(f":: {i}/{len(files)}")
         result = quantify_single_image(
@@ -263,11 +272,23 @@ def quantify_all_images(
         results.append(result)
 
     result_array = np.array(
-        [[r["GT"], r["PR"], r["TP"], r["FP"], r["TN"], r["FN"]] for r in results]
+        [
+            [
+                r["GT"],
+                r["PR"],
+                r["TP"],
+                r["FP"],
+                r["TN"],
+                r["FN"],
+                sum(r["PTimes"]),
+                sum(r["PTimes"]) / len(r["PTimes"]),
+            ]
+            for r in results
+        ]
     )
 
-    with open(os.path.join(save_path, "log.json"), "w+") as f:
-        json.dump(result, f)
+    # with open(os.path.join(save_path, "log.json"), "w+") as f:
+    #     json.dump(results, f)
 
     TP = np.sum(result_array[:, 2])
     FP = np.sum(result_array[:, 3])
@@ -297,6 +318,12 @@ def quantify_all_images(
             "Precision": Precision,
             "Recall": Recall,
             "F1": F,
+            "PerImageTime": str(
+                datetime.timedelta(seconds=np.mean(result_array[:, 6]))
+            ),
+            "PerPatchTime": str(
+                datetime.timedelta(seconds=np.mean(result_array[:, 7]))
+            ),
         },
         index=[0],
     )
