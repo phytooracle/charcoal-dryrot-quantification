@@ -224,8 +224,24 @@ def quantify_single_image(image_path, label_path, model, save_path, p_size):
     }
 
 
+def save_results(path, ds):
+    if os.path.exists(path):
+        df = pd.read_csv(path)
+        df = pd.concat([df, ds])
+    else:
+        df = pd.DataFrame(ds)
+    df.to_csv(path, index=False)
+
+
 def quantify_all_images(
-    path_patches, path_images, path_image_labels, save_path, model, p_size
+    path_patches,
+    path_images,
+    path_image_labels,
+    save_path,
+    results_path,
+    model_name,
+    model,
+    p_size,
 ):
     files = os.listdir(path_patches)
     files = list(set([f.split("-")[0] for f in files]))
@@ -233,8 +249,8 @@ def quantify_all_images(
 
     results = []
     for i, file in enumerate(files):
-        if "IMG_0228" not in file:
-            continue
+        # if "IMG_0228" not in file:
+        #     continue
         print("----------------------------------")
         print(f":: {i}/{len(files)}")
         result = quantify_single_image(
@@ -247,7 +263,7 @@ def quantify_all_images(
         results.append(result)
 
     result_array = np.array(
-        [[r["GT"], r["PR"], r["TP"], r["FP"], r["TN"], r["FN"]] for r in result]
+        [[r["GT"], r["PR"], r["TP"], r["FP"], r["TN"], r["FN"]] for r in results]
     )
 
     with open(os.path.join(save_path, "log.json"), "w+") as f:
@@ -267,6 +283,25 @@ def quantify_all_images(
         if (Precision + Recall) == 0
         else 2 * (Precision * Recall) / (Precision + Recall)
     )
+
+    ds = pd.DataFrame(
+        {
+            "Model-": model_name,
+            "PathSize": p_size,
+            "TP": TP,
+            "FP": FP,
+            "TN": TN,
+            "FN": FN,
+            "IOU": IOU,
+            "ACC": Acc,
+            "Precision": Precision,
+            "Recall": Recall,
+            "F1": F,
+        },
+        index=[0],
+    )
+
+    save_results(results_path, ds)
 
     print(
         f"Correlation between the Ground Truth and prediction quantification values: {np.corrcoef(result_array[:,0],result_array[:,1])[0,1]}"
@@ -309,13 +344,23 @@ def main():
     model_version = f"version_{int(hparams['version'])}"
     model = load_model(args.checkpoint_path, hparams["model_name"], model_version)
 
-    save_path = os.path.join(args.output_path, hparams["model_name"])
+    p_size = int(hparams["data"].split("/")[-2].split("_")[1].split("X")[0])
+
+    save_path = os.path.join(args.output_path, f"{hparams['model_name']}-{p_size}")
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    p_size = int(hparams["data"].split("/")[-2].split("_")[1].split("X")[0])
+    results_path = os.path.join(args.output_path, "results.csv")
+
     quantify_all_images(
-        args.patches_path, args.images_path, args.labels_path, save_path, model, p_size
+        args.patches_path,
+        args.images_path,
+        args.labels_path,
+        save_path,
+        results_path,
+        hparams["model_name"],
+        model,
+        p_size,
     )
 
 
