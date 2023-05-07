@@ -1,23 +1,34 @@
 #!/bin/bash
 
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 9
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 8
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 7
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 6
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 5
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 4
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 3
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 2
-# python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 1
-python classification_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv -n 0
 
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 9
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 8
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 7
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 6
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 5
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 4
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 3
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 2
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 1
-# python segmentation_quantification.py -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ -o /space/ariyanzarei/charcoal_dry_rot/results/ -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv -n 0
+# EfficientNetB4 experiments 
+for e in 9 7 5 3 1
+do
+    for i in {1..10}
+    do
+        echo ">>>>>>>>> Running EfficientNetB4 ==> Experiment id $e, Iteration $i."
+        python classification_quantification.py \
+         -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ \
+         -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ \
+         -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ \
+         -o /space/ariyanzarei/charcoal_dry_rot/results/ \
+         -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_classification_experiments_config_and_results_file.csv \
+         -n $e
+    done
+done
+
+# FCN (with Dice) experiments 
+for e in 8 6 4 2 0
+do
+    for i in {1..10}
+    do
+        echo ">>>>>>>>> Running FCN ==> Experiment id $e, Iteration $i."
+        python segmentation_quantification.py \
+        -p /space/ariyanzarei/charcoal_dry_rot/datasets/patches/2022-04-18_512X512/test/images/ \
+        -i /space/ariyanzarei/charcoal_dry_rot/raw_data/images/ \
+        -l /space/ariyanzarei/charcoal_dry_rot/raw_data/masks/ \
+        -o /space/ariyanzarei/charcoal_dry_rot/results/ \
+        -e /space/ariyanzarei/charcoal_dry_rot/experiments/patch_size_segmentation_experiments_config_and_results_file.csv \
+        -n $e
+    done
+done

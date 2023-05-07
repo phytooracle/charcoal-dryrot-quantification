@@ -15,7 +15,6 @@ from models import *
 
 
 def get_args():
-
     parser = argparse.ArgumentParser(
         description="Quantifications of the classification models on test set images.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -89,7 +88,6 @@ def get_args():
 
 
 def generate_patches(img_address, mask_address, width, height):
-
     annotated_patches = {}
 
     img = np.asarray(Image.open(img_address))
@@ -106,7 +104,6 @@ def generate_patches(img_address, mask_address, width, height):
     mask = mask.astype("uint8")
 
     while x + width < img.shape[1]:
-
         y = 0
 
         while y + height < img.shape[0]:
@@ -170,7 +167,7 @@ def quantify_single_image(image_path, label_path, model, save_path, p_size):
         gt_dryrot_count += np.count_nonzero(gt_mask)
         pr_dryrot_count += np.count_nonzero(segmentation_mask)
 
-    alpha = 0.4
+    # alpha = 0.4
 
     Intersection = np.sum(np.logical_and(GT_mask[:, :, 1], PR_mask[:, :, 0]))
     Union = np.sum(np.logical_or(GT_mask[:, :, 1], PR_mask[:, :, 0]))
@@ -181,25 +178,25 @@ def quantify_single_image(image_path, label_path, model, save_path, p_size):
     TN = np.count_nonzero(np.where((GT_mask[:, :, 1] == 0) & (PR_mask[:, :, 0] == 0)))
     FN = np.count_nonzero(np.where((GT_mask[:, :, 1] == 1) & (PR_mask[:, :, 0] == 0)))
 
-    GT_mask = GT_mask * 255
-    GT_mask = GT_mask.astype("uint8")
-    PR_mask = PR_mask * 255
-    PR_mask = PR_mask.astype("uint8")
+    # GT_mask = GT_mask * 255
+    # GT_mask = GT_mask.astype("uint8")
+    # PR_mask = PR_mask * 255
+    # PR_mask = PR_mask.astype("uint8")
 
-    GT_mask = cv2.addWeighted(GT_mask, alpha, img, 1 - alpha, 0)
-    PR_mask = cv2.addWeighted(PR_mask, alpha, img, 1 - alpha, 0)
+    # GT_mask = cv2.addWeighted(GT_mask, alpha, img, 1 - alpha, 0)
+    # PR_mask = cv2.addWeighted(PR_mask, alpha, img, 1 - alpha, 0)
 
-    GT_mask = cv2.cvtColor(GT_mask, cv2.COLOR_RGB2BGR)
-    PR_mask = cv2.cvtColor(PR_mask, cv2.COLOR_RGB2BGR)
+    # GT_mask = cv2.cvtColor(GT_mask, cv2.COLOR_RGB2BGR)
+    # PR_mask = cv2.cvtColor(PR_mask, cv2.COLOR_RGB2BGR)
 
-    cv2.imwrite(
-        os.path.join(save_path, image_path.split("/")[-1].replace(".JPG", "_GT.JPG")),
-        GT_mask,
-    )
-    cv2.imwrite(
-        os.path.join(save_path, image_path.split("/")[-1].replace(".JPG", "_PR.JPG")),
-        PR_mask,
-    )
+    # cv2.imwrite(
+    #     os.path.join(save_path, image_path.split("/")[-1].replace(".JPG", "_GT.JPG")),
+    #     GT_mask,
+    # )
+    # cv2.imwrite(
+    #     os.path.join(save_path, image_path.split("/")[-1].replace(".JPG", "_PR.JPG")),
+    #     PR_mask,
+    # )
 
     gt_quantification = gt_dryrot_count / total
     pr_quantification = pr_dryrot_count / total
@@ -300,7 +297,7 @@ def quantify_all_images(
 
     ds = pd.DataFrame(
         {
-            "Model-": model_name,
+            "Model": model_name,
             "PathSize": p_size,
             "TP": TP,
             "FP": FP,
