@@ -228,7 +228,7 @@ def quantify_single_image(image_path, label_path, model, save_path, p_size):
 
 
 def save_results(path, ds):
-    if os.path.exists(path):
+    if os.path.exists(path) and os.path.getsize(path) > 0:
         df = pd.read_csv(path)
         df = pd.concat([df, ds])
     else:
@@ -373,7 +373,11 @@ def main():
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    results_path = os.path.join(args.output_path, "results.csv")
+    results_path = os.path.join(
+        args.output_path,
+        "quantification_logs",
+        f"{hparams['model_name']}_size_{p_size}.csv",
+    )
 
     quantify_all_images(
         args.patches_path,
