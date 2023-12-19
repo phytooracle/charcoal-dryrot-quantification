@@ -66,15 +66,9 @@ python3 model_training/training_and_inference/run_next_experiment.py --path hype
 ### Running Inference
 
 #### Classification
-To run inference and quantification using classification models, run:
+To run inference and quantification using classification models and segmentation models, run:
 ```
-python3 model_training/quantification_and_plots/classification_quantification.py
-```
-
-#### Segmentation
-To run inference and quantification using segmentation models, run:
-```
-python3 model_training/quantification_and_plots/segmentation_quantification.py
+./model_training/quantification_and_plots/run_all_quantifications.sh
 ```
 
 #### Jupyter Notebook: Classification & Segmentation
