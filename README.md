@@ -26,6 +26,8 @@ This algorithm detects CRS using various classes of machine learning models, inc
     - Fully Convolutional Network (FCN)
     - DeepLabV3
 
+---
+
 ## Running Code
 To run either training or inference, you will need to download the dataset [here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/season_11_sorghum_yr_2020/level_0/charcol_rot_sorghum/dry_rot_raw.tar.gz). This archive file (.tar) contains both original and annotated images.
 
