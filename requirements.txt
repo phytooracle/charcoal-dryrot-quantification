@@ -19,10 +19,10 @@ six==1.16.0
 sklearn==0.0 
 tifffile==2020.10.1
 tqdm==4.64.0
-detecto==1.1.6 
+# detecto==1.1.6 
 open3d==0.15.2
 utm==0.5.0 
-torch==1.8.1
+torch==1.12.1
 torchvision==0.13.1
 cython==0.29.32 
 python-dotenv==0.20.0
