@@ -23,7 +23,7 @@ detecto==1.1.6
 open3d==0.15.2
 utm==0.5.0 
 torchvision==0.14.1
-torch==1.6.0 
+torch==1.13.1 
 cython==0.29.32 
 python-dotenv==0.20.0
 inquirer==2.9.2
