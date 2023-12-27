@@ -19,17 +19,14 @@ six==1.16.0
 sklearn==0.0 
 tifffile==2020.10.1
 tqdm==4.64.0
-# detecto==1.1.6 
 open3d==0.15.2
 utm==0.5.0 
-torch==1.13.1
+torch==2.0.0
 torchvision==0.13.1
 cython==0.29.32 
 python-dotenv==0.20.0
 inquirer==2.9.2
 imagecodecs==2021.11.20
-# torch
-# torchsvision
 torchmetrics
 pytorch-lightning
 h5py
