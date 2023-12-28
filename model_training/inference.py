@@ -12,6 +12,8 @@ import sys
 from models import *
 from skimage.io import imread
 import matplotlib.pyplot as plt
+import streamlit as st
+from PIL import Image
 
 # --------------------------------------------------
 def get_args():
@@ -114,29 +116,31 @@ def generate_plot(image, prediction):
 def main():
     """Make a jazz noise here"""
 
-    args = get_args()
+    st.title("Image Prediction App")
 
-    if not os.path.isdir(args.output_directory):
-        os.makedirs(args.output_directory)
-    
     # Load model
-    checkpoint_path = get_model_cyverse_path(model_name=args.model)
-    model = eval(args.model).load_from_checkpoint(
-    checkpoint_path,
-    # map_location='cpu'#'cuda:0'
+    model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
+    "EfficientNetB3", "EfficientNetB4", "MobileNetV3Small", "MobileNetV3SmallCustom", "MobileNetV3Large", "ResNet"))
+    checkpoint_path = get_model_cyverse_path(model_name=model_name)
+    model = eval(model_name).load_from_checkpoint(
+        checkpoint_path,
+        # map_location='cpu'#'cuda:0'
     )
-    
-    # Read the image
-    image = imread(os.path.join(args.image))
 
-    # Run inference
-    prediction = model.predict_single_image(image)
-    
-    if args.model in ['UNET', 'FCN', 'DeepLabV3']:
-        generate_plot(image=image, prediction=prediction)
-    
-    else:
-        print('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+    # Upload the image
+    image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
+    if image_file is not None:
+        image = Image.open(image_file)
+        st.image(image, caption='Uploaded Image', use_column_width=True)
+
+        # Run inference
+        prediction = model.predict_single_image(image)
+
+        if model_name in ['UNET', 'FCN', 'DeepLabV3']:
+            st.image(generate_plot(image=image, prediction=prediction), caption='Prediction', use_column_width=True)
+        else:
+            st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
 
 
 # --------------------------------------------------
