@@ -27,6 +27,6 @@ cython==0.29.32
 python-dotenv==0.20.0
 inquirer==2.9.2
 imagecodecs==2021.11.20
-torchmetrics
+torchmetrics==0.8.2
 pytorch-lightning
 h5py
