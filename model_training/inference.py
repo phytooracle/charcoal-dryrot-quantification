@@ -117,6 +117,8 @@ def generate_plot(image, prediction, model):
 
 
 # --------------------------------------------------
+import streamlit as st
+
 def main():
     """Make a jazz noise here"""
     args = get_args()
@@ -125,7 +127,17 @@ def main():
         os.makedirs(args.output_directory)
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
-    st.header("Input Selection")
+
+    # Create a sidebar for page selection
+    page = st.sidebar.selectbox("Select a Page", ["Input Upload or Selection", "Model Results"])
+
+    if page == "Input Upload or Selection":
+        input_upload_or_selection()
+    elif page == "Model Results":
+        model_results()
+
+def input_upload_or_selection():
+    st.header("Input Upload or Selection")
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
     "EfficientNetB3", "EfficientNetB4", "MobileNetV3Small", "MobileNetV3SmallCustom", "MobileNetV3Large", "ResNet"))
@@ -148,10 +160,11 @@ def main():
     if image is not None:
         # Run inference
         prediction = model.predict_single_image(image)
-        display_results(image, prediction, model_name)
+        return image, prediction, model_name
 
-def display_results(image, prediction, model_name):
+def model_results():
     st.header("Model Results")
+    image, prediction, model_name = input_upload_or_selection()
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
