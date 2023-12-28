@@ -135,9 +135,12 @@ def main():
         # map_location='cpu'#'cuda:0'
     )
 
-    # Select an image from the library or upload an image
+    # Create two sections
+    col1, col2 = st.columns(2)
+
+    # Select an image from the library or upload an image in the first section
     images = glob.glob('images/test_patches/*.png')  # Replace with your actual image paths
-    image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
+    image_file = col1.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
         image = imread(image_file)
     else:
@@ -149,12 +152,14 @@ def main():
         # Run inference
         prediction = model.predict_single_image(image)
 
+        # Display the results in the second section
         if model_name in ['UNET', 'FCN', 'DeepLabV3']:
             result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-            st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+            col2.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         else:
-            st.image(image)
-            st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+            col2.image(image)
+            col2.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
