@@ -144,7 +144,7 @@ def main():
     if image_file is not None:
         image = imread(image_file)
     else:
-        selected_image = image_select("Select Image", images, use_container_width=True)
+        selected_image = col1.image_select("Select Image", images, use_container_width=True)
         if selected_image is not None:
             image = imread(selected_image)
 
