@@ -136,7 +136,7 @@ def main():
     )
 
     # Select an image from the library or upload an image
-    images = glob.glob('/opt/images/test_patches/*.png')  # Replace with your actual image paths
+    images = glob.glob('images/test_patches/*.png')  # Replace with your actual image paths
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
         image = Image.open(image_file)
