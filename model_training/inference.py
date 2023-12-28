@@ -153,6 +153,7 @@ def main():
             result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
             st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         else:
+            st.image(image)
             st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
 
 # --------------------------------------------------
