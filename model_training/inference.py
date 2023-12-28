@@ -139,11 +139,11 @@ def main():
     images = glob.glob('images/test_patches/*.png')  # Replace with your actual image paths
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
-        image = Image.open(image_file)
+        image = imread(image_file)
     else:
         selected_image = image_select("Select Image", images)
         if selected_image is not None:
-            image = Image.open(selected_image)
+            image = imread(selected_image)
 
     if image is not None:
         # st.image(image, caption='Selected Image', use_column_width=True)
