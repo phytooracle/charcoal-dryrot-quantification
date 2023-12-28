@@ -23,37 +23,37 @@ def get_args():
         description='Charcoal rot of sorghum (CRS) inference',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('-c',
-                        '--checkpoint',
-                        help='Path to model checkpoint directory',
-                        metavar='str',
-                        type=str,
-                        required=True)
+    # parser.add_argument('-c',
+    #                     '--checkpoint',
+    #                     help='Path to model checkpoint directory',
+    #                     metavar='str',
+    #                     type=str,
+    #                     required=True)
 
-    parser.add_argument('-m',
-                        '--model',
-                        help='Name of model to use for inference',
-                        metavar='str',
-                        type=str,
-                        choices=['DeepLabV3', 'EfficientNetB4', 'MobileNetV3Large', 'MobileNetV3SmallCustom',
-                        'UNET', 'EfficientNetB3', 'FCN', 'MobileNetV3Small', 'ResNet'],
-                        required=True)
+    # parser.add_argument('-m',
+    #                     '--model',
+    #                     help='Name of model to use for inference',
+    #                     metavar='str',
+    #                     type=str,
+    #                     choices=['DeepLabV3', 'EfficientNetB4', 'MobileNetV3Large', 'MobileNetV3SmallCustom',
+    #                     'UNET', 'EfficientNetB3', 'FCN', 'MobileNetV3Small', 'ResNet'],
+    #                     required=True)
 
-    parser.add_argument('-v',
-                        '--version',
-                        help='Model version to use for inference',
-                        metavar='str',
-                        type=str,
-                        choices=['version_0', 'version_1', 'version_2', 'version_3',
-                        'version_4', 'version_5', 'version_6'],
-                        default='version_0')
+    # parser.add_argument('-v',
+    #                     '--version',
+    #                     help='Model version to use for inference',
+    #                     metavar='str',
+    #                     type=str,
+    #                     choices=['version_0', 'version_1', 'version_2', 'version_3',
+    #                     'version_4', 'version_5', 'version_6'],
+    #                     default='version_0')
 
-    parser.add_argument('-i',
-                        '--image',
-                        help='Path to image to run inference',
-                        metavar='str',
-                        type=str,
-                        required=True)
+    # parser.add_argument('-i',
+    #                     '--image',
+    #                     help='Path to image to run inference',
+    #                     metavar='str',
+    #                     type=str,
+    #                     required=True)
 
     parser.add_argument('-o',
                         '--output_directory',
@@ -87,7 +87,7 @@ def get_model_cyverse_path(model_name):
 
     
 # --------------------------------------------------
-def generate_plot(image, prediction):
+def generate_plot(image, prediction, model):
 
     args = get_args()
 
@@ -106,17 +106,23 @@ def generate_plot(image, prediction):
     axes[1].tick_params(bottom=False, left=False, labelbottom=False, labelleft=False)  # Remove ticks and labels for axes[1]
 
     # Save the plot
-    plt.savefig(f'{args.output_directory}/output_{args.model}.png', dpi=900, facecolor='white', edgecolor='white', bbox_inches='tight')
+    plt.savefig(f'{args.output_directory}/output_{model}.png', dpi=900, facecolor='white', edgecolor='white', bbox_inches='tight')
 
-    # Show the plot
-    plt.show()
+    # # Show the plot
+    # plt.show()
+
+    return f'{args.output_directory}/output_{model}.png'
 
 
 # --------------------------------------------------
 def main():
     """Make a jazz noise here"""
+    args = get_args()
 
-    st.title("Image Prediction App")
+    if not os.path.isdir(args.output_directory):
+        os.makedirs(args.output_directory)
+    
+    st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
 
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
@@ -130,14 +136,16 @@ def main():
     # Upload the image
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
-        image = Image.open(image_file)
-        st.image(image, caption='Uploaded Image', use_column_width=True)
+        # image = Image.open(image_file)
+        image = imread(image_file)
+        # st.image(image, caption='Uploaded Image', use_column_width=True)
 
         # Run inference
         prediction = model.predict_single_image(image)
 
         if model_name in ['UNET', 'FCN', 'DeepLabV3']:
-            st.image(generate_plot(image=image, prediction=prediction), caption='Prediction', use_column_width=True)
+            result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
+            st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         else:
             st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
 
