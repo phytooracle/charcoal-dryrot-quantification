@@ -14,6 +14,8 @@ from skimage.io import imread
 import matplotlib.pyplot as plt
 import streamlit as st
 from PIL import Image
+from streamlit_image_select import image_select
+import glob
 
 # --------------------------------------------------
 def get_args():
@@ -133,12 +135,18 @@ def main():
         # map_location='cpu'#'cuda:0'
     )
 
-    # Upload the image
+    # Select an image from the library or upload an image
+    images = glob.glob('../images/test_patches/*.png')  # Replace with your actual image paths
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
-        # image = Image.open(image_file)
-        image = imread(image_file)
-        # st.image(image, caption='Uploaded Image', use_column_width=True)
+        image = Image.open(image_file)
+    else:
+        selected_image = image_select("Select Image", images)
+        if selected_image is not None:
+            image = Image.open(selected_image)
+
+    if image is not None:
+        # st.image(image, caption='Selected Image', use_column_width=True)
 
         # Run inference
         prediction = model.predict_single_image(image)
@@ -148,8 +156,6 @@ def main():
             st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         else:
             st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-
-
 
 # --------------------------------------------------
 if __name__ == '__main__':
