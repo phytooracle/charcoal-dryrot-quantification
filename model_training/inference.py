@@ -148,13 +148,17 @@ def main():
     if image is not None:
         # Run inference
         prediction = model.predict_single_image(image)
+        display_results(image, prediction, model_name)
 
-        if model_name in ['UNET', 'FCN', 'DeepLabV3']:
-            result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-            st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
-        else:
-            st.image(image)
-            st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+def display_results(image, prediction, model_name):
+    st.header("Model Results")
+    if model_name in ['UNET', 'FCN', 'DeepLabV3']:
+        result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
+        st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+    else:
+        st.image(image)
+        st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
