@@ -108,4 +108,4 @@ RUN apt-get clean
 EXPOSE 8501
 
 # Run app.py when the container launches
-CMD streamlit run model_training/inference.py
+CMD streamlit run /opt/model_training/inference.py
