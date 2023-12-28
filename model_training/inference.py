@@ -141,13 +141,15 @@ def main():
     if image_file is not None:
         image = imread(image_file)
     else:
-        selected_image = image_select("Select Image", images)
+        selected_image = st.session_state.get('selected_image', None)
+        if selected_image is None:
+            selected_image = image_select("Select Image", images)
+            if st.button('Confirm selection'):
+                st.session_state['selected_image'] = selected_image
         if selected_image is not None:
             image = imread(selected_image)
 
     if image is not None:
-        # st.image(image, caption='Selected Image', use_column_width=True)
-
         # Run inference
         prediction = model.predict_single_image(image)
 
@@ -156,6 +158,7 @@ def main():
             st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         else:
             st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
