@@ -125,7 +125,7 @@ def main():
         os.makedirs(args.output_directory)
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
-
+    st.header("Input Selection")
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
     "EfficientNetB3", "EfficientNetB4", "MobileNetV3Small", "MobileNetV3SmallCustom", "MobileNetV3Large", "ResNet"))
