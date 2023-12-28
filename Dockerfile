@@ -104,4 +104,8 @@ RUN echo "{ \"irods_zone_name\": \"iplant\", \"irods_host\": \"data.cyverse.org\
 RUN apt-get autoremove -y
 RUN apt-get clean
 
-ENTRYPOINT [ "/usr/local/bin/python3.7", "/opt/main.py" ]
+# Make port 8501 available to the world outside this container
+EXPOSE 8501
+
+# Run app.py when the container launches
+CMD streamlit run model_training/inference.py
