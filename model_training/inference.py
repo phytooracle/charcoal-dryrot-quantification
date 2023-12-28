@@ -21,10 +21,6 @@ def get_args():
         description='Charcoal rot of sorghum (CRS) inference',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    # parser.add_argument('positional',
-    #                     metavar='str',
-    #                     help='A positional argument')
-
     parser.add_argument('-c',
                         '--checkpoint',
                         help='Path to model checkpoint directory',
@@ -66,6 +62,8 @@ def get_args():
 
     return parser.parse_args()
 
+
+# --------------------------------------------------
 def get_model_cyverse_path(model_name):
 
     base_path = 'https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints'
@@ -87,6 +85,32 @@ def get_model_cyverse_path(model_name):
 
     
 # --------------------------------------------------
+def generate_plot(image, prediction):
+
+    args = get_args()
+
+    # Create a subplot with 1 row and 2 columns
+    fig, axes = plt.subplots(1, 2)
+
+    # Display the image in the first subplot
+    axes[0].imshow(image)
+    axes[0].set_title('Image')
+    axes[0].tick_params(bottom=False, left=False, labelbottom=False, labelleft=False)  # Remove ticks and labels for axes[0]
+
+    # Display the prediction in the second subplot
+    axes[1].imshow(image)
+    axes[1].imshow(prediction, alpha=.5)
+    axes[1].set_title('Prediction')
+    axes[1].tick_params(bottom=False, left=False, labelbottom=False, labelleft=False)  # Remove ticks and labels for axes[1]
+
+    # Save the plot
+    plt.savefig(f'{args.output_directory}/output_{args.model}.png', dpi=900, facecolor='white', edgecolor='white', bbox_inches='tight')
+
+    # Show the plot
+    plt.show()
+
+
+# --------------------------------------------------
 def main():
     """Make a jazz noise here"""
 
@@ -95,17 +119,7 @@ def main():
     if not os.path.isdir(args.output_directory):
         os.makedirs(args.output_directory)
     
-    # base_path = args.checkpoint
-    # model_name = args.model
-    # version_no = args.version
-
-    # checkpoints_path = os.path.join(base_path,model_name,"lightning_logs", version_no, "checkpoints")
-    # checkpoint_name = os.listdir(checkpoints_path)[0]
-    # model = eval(model_name).load_from_checkpoint(
-    # os.path.join(checkpoints_path, checkpoint_name),
-    # # map_location='cpu'#'cuda:0'
-    # )
-    # print(f"checkpoint name: {checkpoint_name}")
+    # Load model
     checkpoint_path = get_model_cyverse_path(model_name=args.model)
     model = eval(args.model).load_from_checkpoint(
     checkpoint_path,
@@ -119,23 +133,7 @@ def main():
     prediction = model.predict_single_image(image)
     
     if args.model in ['UNET', 'FCN', 'DeepLabV3']:
-
-        # Create a subplot with 1 row and 2 columns
-        fig, axes = plt.subplots(1, 2)
-
-        # Display the image in the first subplot
-        axes[0].imshow(image)
-        axes[0].set_title('Image')
-        axes[0].tick_params(bottom=False, left=False, labelbottom=False, labelleft=False)  # Remove ticks and labels for axes[0]
-
-        # Display the prediction in the second subplot
-        axes[1].imshow(image)
-        axes[1].imshow(prediction, alpha=.5)
-        axes[1].set_title('Prediction')
-        axes[1].tick_params(bottom=False, left=False, labelbottom=False, labelleft=False)  # Remove ticks and labels for axes[1]
-
-        # Save the plot
-        plt.savefig(f'{args.output_directory}/output_{args.model}.png', dpi=900, facecolor='white', edgecolor='white', bbox_inches='tight')
+        generate_plot(image=image, prediction=prediction)
     
     else:
         print('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
