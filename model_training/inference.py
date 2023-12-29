@@ -144,21 +144,8 @@ def documentation():
     """
     )
 
+
 # --------------------------------------------------
-import streamlit as st
-
-def main():
-    """Make a jazz noise here"""
-    args = get_args()
-
-    if not os.path.isdir(args.output_directory):
-        os.makedirs(args.output_directory)
-    
-    st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
-    documentation()
-    input_upload_or_selection()
-    model_results()
-
 def input_upload_or_selection():
     st.header("Input Upload or Selection")
     # Load model
@@ -185,6 +172,8 @@ def input_upload_or_selection():
         prediction = model.predict_single_image(image)
         return image, prediction, model_name
 
+
+# --------------------------------------------------
 def model_results():
     st.header("Model Results")
     image, prediction, model_name = input_upload_or_selection()
@@ -195,6 +184,21 @@ def model_results():
         st.image(image)
         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
 
+
+# --------------------------------------------------
+import streamlit as st
+
+def main():
+    """Make a jazz noise here"""
+    args = get_args()
+
+    if not os.path.isdir(args.output_directory):
+        os.makedirs(args.output_directory)
+    
+    st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
+    documentation()
+    input_upload_or_selection()
+    model_results()
 
 
 # --------------------------------------------------
