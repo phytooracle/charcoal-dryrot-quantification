@@ -156,7 +156,7 @@ def input_upload_or_selection():
     )
 
     # Select an image from the library or upload an image
-    images = glob.glob('images/test_patches/*.png')  # Replace with your actual image paths
+    images = glob.glob('images/test_patches/*.png')[:10]  # Replace with your actual image paths
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
         image = imread(image_file)
