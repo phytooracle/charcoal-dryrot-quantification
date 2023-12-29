@@ -115,8 +115,38 @@ def generate_plot(image, prediction, model):
 
     return f'{args.output_directory}/output_{model}.png'
 
+def documentation():
+    st.markdown(
+        """
+        Charcoal rot of sorghum (CRS) is a disease caused by the fungal pathogen *Macrophomina phaseolina* 
+        (Tassi) Goid. This fungal pathogen has a wide host range, infecting over 500 plant species in over 100 
+        plant families. When sorghum is infected, it results in a variety of symptoms including root rot, 
+        soft stalk, early lodging of plants, premature drying of stalk, reduced head size, and poor filling of 
+        grain.
+
+        This app allows you to run a variety of classification and segmentation models that identify and quanitfy 
+        CRS. These models include:
+        - Classification
+            - ResNet18
+            - MobileNetV3 small
+            - MobileNetV3 small custom
+            - MobileNetV3 large
+            - EfficientNet-B3
+            - EfficientNet-B4 (Koonce 2021a)
+        - Segmentation
+            - U-NET
+            - Fully Convolutional Network (FCN)
+            - DeepLabV3
+
+        To use this app:
+            1. Select or upload an image
+            2. Scroll down to the model results 
+        """
+    )
 
 # --------------------------------------------------
+import streamlit as st
+
 def main():
     """Make a jazz noise here"""
     args = get_args()
@@ -125,33 +155,16 @@ def main():
         os.makedirs(args.output_directory)
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
-    st.markdown(
-    """
-    Charcoal rot of sorghum (CRS) is a disease caused by the fungal pathogen *Macrophomina phaseolina* 
-    (Tassi) Goid. This fungal pathogen has a wide host range, infecting over 500 plant species in over 100 
-    plant families. When sorghum is infected, it results in a variety of symptoms including root rot, 
-    soft stalk, early lodging of plants, premature drying of stalk, reduced head size, and poor filling of 
-    grain.
+    documentation()
+    # Create a sidebar for page selection
+    page = st.sidebar.radio("Select a Page", ["Input Upload or Selection", "Model Results"])
 
-    This app allows you to run a variety of classification and segmentation models that identify and quanitfy 
-    CRS. These models include:
-    - Classification
-        - ResNet18
-        - MobileNetV3 small
-        - MobileNetV3 small custom
-        - MobileNetV3 large
-        - EfficientNet-B3
-        - EfficientNet-B4 (Koonce 2021a)
-    - Segmentation
-        - U-NET
-        - Fully Convolutional Network (FCN)
-        - DeepLabV3
+    if page == "Input Upload or Selection":
+        input_upload_or_selection()
+    elif page == "Model Results":
+        model_results()
 
-    To use this app:
-        1. Select or upload an image
-        2. Scroll down to the model results 
-    """
-    )
+def input_upload_or_selection():
     st.header("Input Upload or Selection")
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
@@ -175,17 +188,17 @@ def main():
     if image is not None:
         # Run inference
         prediction = model.predict_single_image(image)
-        display_results(image, prediction, model_name)
+        return image, prediction, model_name
 
-def display_results(image, prediction, model_name):
+def model_results():
     st.header("Model Results")
+    image, prediction, model_name = input_upload_or_selection()
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
     else:
         st.image(image)
         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-
 
 # --------------------------------------------------
 if __name__ == '__main__':
