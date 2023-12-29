@@ -138,9 +138,7 @@ def documentation():
         - Fully Convolutional Network (FCN)
         - DeepLabV3
 
-    To use this app:
-        1. Select or upload an image
-        2. Scroll down to the model results 
+    To use this app select or upload an image, then scroll down to the model results. 
     """
     )
 
