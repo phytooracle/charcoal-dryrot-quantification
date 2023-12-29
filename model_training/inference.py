@@ -125,6 +125,29 @@ def main():
         os.makedirs(args.output_directory)
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
+    st.markdown(
+    """
+    Charcoal rot of sorghum (CRS) is a disease caused by the fungal pathogen *Macrophomina phaseolina* 
+    (Tassi) Goid. This fungal pathogen has a wide host range, infecting over 500 plant species in over 100 
+    plant families. When sorghum is infected, it results in a variety of symptoms including root rot, 
+    soft stalk, early lodging of plants, premature drying of stalk, reduced head size, and poor filling of 
+    grain.
+
+    This app allows you to run a variety of classification and segmentation models that identify and quanitfy 
+    CRS. These models include:
+    - Classification
+        - ResNet18
+        - MobileNetV3 small
+        - MobileNetV3 small custom
+        - MobileNetV3 large
+        - EfficientNet-B3
+        - EfficientNet-B4 (Koonce 2021a)
+    - Segmentation
+        - U-NET
+        - Fully Convolutional Network (FCN)
+        - DeepLabV3
+    """
+    )
     st.header("Input Upload or Selection")
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
