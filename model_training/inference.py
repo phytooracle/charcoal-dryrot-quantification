@@ -120,12 +120,12 @@ def documentation():
     """
     Charcoal rot of sorghum (CRS) is a disease caused by the fungal pathogen *Macrophomina phaseolina* 
     (Tassi) Goid. This fungal pathogen has a wide host range, infecting over 500 plant species in over 100 
-    plant families. When sorghum is infected, it results in a variety of symptoms including root rot, 
+    plant families. When *M. phaseolina* infects sorghum, it results in a variety of symptoms including root rot, 
     soft stalk, early lodging of plants, premature drying of stalk, reduced head size, and poor filling of 
     grain.
 
-    This app allows you to run a variety of classification and segmentation models that identify and quanitfy 
-    CRS. These models include:
+    This app allows you to run various classification and segmentation machine learning models that identify 
+    and quanitfy CRS, including:
     - Classification
         - ResNet18
         - MobileNetV3 small
@@ -138,7 +138,7 @@ def documentation():
         - Fully Convolutional Network (FCN)
         - DeepLabV3
 
-    To use this app select or upload an image, then scroll down to the model results. 
+    **To use this app select or upload an image, then scroll down to the model results.**
     """
     )
 
