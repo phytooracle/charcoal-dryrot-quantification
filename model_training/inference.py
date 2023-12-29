@@ -117,31 +117,31 @@ def generate_plot(image, prediction, model):
 
 def documentation():
     st.markdown(
-        """
-        Charcoal rot of sorghum (CRS) is a disease caused by the fungal pathogen *Macrophomina phaseolina* 
-        (Tassi) Goid. This fungal pathogen has a wide host range, infecting over 500 plant species in over 100 
-        plant families. When sorghum is infected, it results in a variety of symptoms including root rot, 
-        soft stalk, early lodging of plants, premature drying of stalk, reduced head size, and poor filling of 
-        grain.
+    """
+    Charcoal rot of sorghum (CRS) is a disease caused by the fungal pathogen *Macrophomina phaseolina* 
+    (Tassi) Goid. This fungal pathogen has a wide host range, infecting over 500 plant species in over 100 
+    plant families. When sorghum is infected, it results in a variety of symptoms including root rot, 
+    soft stalk, early lodging of plants, premature drying of stalk, reduced head size, and poor filling of 
+    grain.
 
-        This app allows you to run a variety of classification and segmentation models that identify and quanitfy 
-        CRS. These models include:
-        - Classification
-            - ResNet18
-            - MobileNetV3 small
-            - MobileNetV3 small custom
-            - MobileNetV3 large
-            - EfficientNet-B3
-            - EfficientNet-B4 (Koonce 2021a)
-        - Segmentation
-            - U-NET
-            - Fully Convolutional Network (FCN)
-            - DeepLabV3
+    This app allows you to run a variety of classification and segmentation models that identify and quanitfy 
+    CRS. These models include:
+    - Classification
+        - ResNet18
+        - MobileNetV3 small
+        - MobileNetV3 small custom
+        - MobileNetV3 large
+        - EfficientNet-B3
+        - EfficientNet-B4 (Koonce 2021a)
+    - Segmentation
+        - U-NET
+        - Fully Convolutional Network (FCN)
+        - DeepLabV3
 
-        To use this app:
-            1. Select or upload an image
-            2. Scroll down to the model results 
-        """
+    To use this app:
+        1. Select or upload an image
+        2. Scroll down to the model results 
+    """
     )
 
 # --------------------------------------------------
@@ -156,13 +156,8 @@ def main():
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
     documentation()
-    # Create a sidebar for page selection
-    page = st.sidebar.radio("Select a Page", ["Input Upload or Selection", "Model Results"])
-
-    if page == "Input Upload or Selection":
-        input_upload_or_selection()
-    elif page == "Model Results":
-        model_results()
+    input_upload_or_selection()
+    model_results()
 
 def input_upload_or_selection():
     st.header("Input Upload or Selection")
@@ -199,6 +194,8 @@ def model_results():
     else:
         st.image(image)
         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
