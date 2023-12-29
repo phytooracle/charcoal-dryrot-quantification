@@ -174,9 +174,9 @@ def input_upload_or_selection():
 
 
 # --------------------------------------------------
-def model_results():
+def model_results(image, prediction, model_name):
     st.header("Model Results")
-    image, prediction, model_name = input_upload_or_selection()
+    
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
@@ -197,8 +197,8 @@ def main():
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
     documentation()
-    input_upload_or_selection()
-    model_results()
+    image, prediction, model_name = input_upload_or_selection()
+    model_results(image=image, prediction=prediction, model_name=model_name)
 
 
 # --------------------------------------------------
