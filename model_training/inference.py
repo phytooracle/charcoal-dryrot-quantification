@@ -125,7 +125,7 @@ def documentation():
     grain.
 
     This app allows you to run various classification and segmentation machine learning models that identify 
-    and quanitfy CRS. You can download each trained model by clicking on the model name:
+    and quanitfy CRS. Each trained model can be downloaded by clicking on the model name below:
     - Classification
         - [ResNet18](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/ResNet/lightning_logs/version_0/checkpoints/epoch%3D11-step%3D70668.ckpt)
         - [MobileNetV3 small](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/MobileNetV3Small/lightning_logs/version_0/checkpoints/epoch%3D7-step%3D47112.ckpt)
@@ -138,7 +138,7 @@ def documentation():
         - [Fully Convolutional Network (FCN)](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt)
         - [DeepLabV3](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/DeepLabV3/lightning_logs/version_6/checkpoints/epoch%3D44-step%3D83385.ckpt)
 
-    **To use this app select or upload an image, then scroll down to the model results.**
+    **To use this app (*i*) select the model, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
     """
     )
 
