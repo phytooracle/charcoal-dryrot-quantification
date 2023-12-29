@@ -8,7 +8,6 @@ Purpose: Charcoal rot of sorghum (CRS) inference
 import argparse
 import os
 import sys
-# sys.path.append("..")
 from models import *
 from skimage.io import imread
 import matplotlib.pyplot as plt
@@ -17,6 +16,7 @@ from PIL import Image
 from streamlit_image_select import image_select
 import glob
 
+
 # --------------------------------------------------
 def get_args():
     """Get command-line arguments"""
@@ -24,38 +24,6 @@ def get_args():
     parser = argparse.ArgumentParser(
         description='Charcoal rot of sorghum (CRS) inference',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-    # parser.add_argument('-c',
-    #                     '--checkpoint',
-    #                     help='Path to model checkpoint directory',
-    #                     metavar='str',
-    #                     type=str,
-    #                     required=True)
-
-    # parser.add_argument('-m',
-    #                     '--model',
-    #                     help='Name of model to use for inference',
-    #                     metavar='str',
-    #                     type=str,
-    #                     choices=['DeepLabV3', 'EfficientNetB4', 'MobileNetV3Large', 'MobileNetV3SmallCustom',
-    #                     'UNET', 'EfficientNetB3', 'FCN', 'MobileNetV3Small', 'ResNet'],
-    #                     required=True)
-
-    # parser.add_argument('-v',
-    #                     '--version',
-    #                     help='Model version to use for inference',
-    #                     metavar='str',
-    #                     type=str,
-    #                     choices=['version_0', 'version_1', 'version_2', 'version_3',
-    #                     'version_4', 'version_5', 'version_6'],
-    #                     default='version_0')
-
-    # parser.add_argument('-i',
-    #                     '--image',
-    #                     help='Path to image to run inference',
-    #                     metavar='str',
-    #                     type=str,
-    #                     required=True)
 
     parser.add_argument('-o',
                         '--output_directory',
@@ -115,6 +83,8 @@ def generate_plot(image, prediction, model):
 
     return f'{args.output_directory}/output_{model}.png'
 
+
+# --------------------------------------------------
 def documentation():
     st.markdown(
     """
@@ -184,8 +154,6 @@ def model_results(image, prediction, model_name):
 
 
 # --------------------------------------------------
-import streamlit as st
-
 def main():
     """Make a jazz noise here"""
     args = get_args()
