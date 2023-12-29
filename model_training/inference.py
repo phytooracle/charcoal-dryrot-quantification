@@ -146,6 +146,10 @@ def main():
         - U-NET
         - Fully Convolutional Network (FCN)
         - DeepLabV3
+
+    To use this app:
+        1. Select or upload an image
+        2. Scroll down to the model results 
     """
     )
     st.header("Input Upload or Selection")
