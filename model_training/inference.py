@@ -166,38 +166,18 @@ def input_upload_or_selection():
 
 
 # --------------------------------------------------
-# def model_results(image, prediction, model_name, execution_time):
-#     st.header("Model Results")
-#     st.success(f"{model_name} ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
-#     args = get_args()
-    
-#     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
-#         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-#         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
-#         delete_directory(args.output_directory)
-#     else:
-#         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
-#         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
 def model_results(image, prediction, model_name, execution_time):
     st.header("Model Results")
     st.success(f"{model_name} ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
     args = get_args()
     
-    # Create an empty slot
-    image_slot = st.empty()
-    
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-        # Use the empty slot to display the image
-        image_slot.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+        st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         delete_directory(args.output_directory)
     else:
-        # Use the empty slot to display the image
-        image_slot.image(image, caption=f'{model_name} Prediction', use_column_width=True)
+        st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-        
-    # Clear the image when needed
-    image_slot.empty()
 
 
 # --------------------------------------------------
