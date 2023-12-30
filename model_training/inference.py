@@ -136,7 +136,7 @@ def input_upload_or_selection():
     st.header("Input Upload or Selection")
     st.markdown(
     """
-    The complete image patch test set can be downloaded by [clicking here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/images/test_images.zip).
+    *The complete image patch test set can be downloaded by [clicking here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/images/test_images.zip).*
     """)
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
