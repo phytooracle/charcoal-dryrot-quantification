@@ -151,7 +151,9 @@ def input_upload_or_selection():
 
     if image is not None:
         # Run inference
-        prediction = model.predict_single_image(image)
+        with st.spinner('Running model...'):
+            prediction = model.predict_single_image(image)
+        st.success('Done!')
         return image, prediction, model_name
 
 
