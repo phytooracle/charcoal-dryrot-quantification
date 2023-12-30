@@ -15,6 +15,7 @@ import streamlit as st
 from PIL import Image
 from streamlit_image_select import image_select
 import glob
+import shutil
 
 
 # --------------------------------------------------
@@ -67,6 +68,7 @@ def get_model_cyverse_path(model_name):
 def generate_plot(image, prediction, model):
 
     args = get_args()
+    create_directory(directory_path=args.output_directory)
 
     # Create a subplot with 1 row and 2 columns
     fig, axes = plt.subplots(1, 2)
@@ -156,13 +158,29 @@ def input_upload_or_selection():
 # --------------------------------------------------
 def model_results(image, prediction, model_name):
     st.header("Model Results")
+    args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+        delete_directory(args.output_directory)
     else:
         st.image(image)
         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
+
+# --------------------------------------------------
+def delete_directory(directory_path):
+    if os.path.exists(directory_path):
+        shutil.rmtree(directory_path)
+    else:
+        print("The directory does not exist")
+
+
+# --------------------------------------------------
+def create_directory(directory_path):
+    if not os.path.isdir(directory_path):
+        os.makedirs(directory_path)
 
 
 # --------------------------------------------------
@@ -170,8 +188,7 @@ def main():
     """Make a jazz noise here"""
     args = get_args()
 
-    if not os.path.isdir(args.output_directory):
-        os.makedirs(args.output_directory)
+
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
     documentation()
