@@ -118,8 +118,6 @@ def documentation():
         - [Fully Convolutional Network (FCN)](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt)
         - [DeepLabV3](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/DeepLabV3/lightning_logs/version_6/checkpoints/epoch%3D44-step%3D83385.ckpt)
 
-    The complete image patch test set can be downloaded by [clicking here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/images/test_images.zip).
-
     **To use this app: (*i*) select a model in the left sidebar, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
     """
     )
@@ -136,6 +134,10 @@ def input_upload_or_selection():
     args = get_args()
 
     st.header("Input Upload or Selection")
+    st.markdown(
+    """
+    The complete image patch test set can be downloaded by [clicking here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/images/test_images.zip).
+    """)
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
     "EfficientNetB3", "EfficientNetB4", "MobileNetV3Small", "MobileNetV3SmallCustom", "MobileNetV3Large", "ResNet"))
