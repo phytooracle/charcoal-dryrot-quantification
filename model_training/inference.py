@@ -164,7 +164,7 @@ def input_upload_or_selection():
 # --------------------------------------------------
 def model_results(image, prediction, model_name, execution_time):
     st.header("Model Results")
-    st.success(f'Model ran successfully! The prediction took {execution_time} seconds to run.')
+    st.success(f'Model ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.')
     args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
