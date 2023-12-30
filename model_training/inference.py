@@ -153,13 +153,13 @@ def input_upload_or_selection():
         # Run inference
         with st.spinner('Running model...'):
             prediction = model.predict_single_image(image)
-        st.success('Done!')
         return image, prediction, model_name
 
 
 # --------------------------------------------------
 def model_results(image, prediction, model_name):
     st.header("Model Results")
+    st.success('Done!')
     args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
