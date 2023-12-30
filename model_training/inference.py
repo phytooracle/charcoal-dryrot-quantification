@@ -174,17 +174,13 @@ def input_upload_or_selection():
 #     else:
 #         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
 #         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-# Create placeholders at the start of your script
-header_placeholder = st.empty()
-success_placeholder = st.empty()
-image_placeholder = st.empty()
-classification_placeholder = st.empty()
+
 def model_results(image, prediction, model_name, execution_time):
-    # Clear the placeholders at the start of the function
-    header_placeholder.empty()
-    success_placeholder.empty()
-    image_placeholder.empty()
-    classification_placeholder.empty()
+    # Create placeholders at the start of your script
+    header_placeholder = st.empty()
+    success_placeholder = st.empty()
+    image_placeholder = st.empty()
+    classification_placeholder = st.empty()
 
     # Update the placeholders
     header_placeholder.header("Model Results")
