@@ -121,6 +121,11 @@ def documentation():
 
 
 # --------------------------------------------------
+@st.cache_resource
+def load_model(model_name, checkpoint_path):
+    return eval(model_name).load_from_checkpoint(checkpoint_path) #, # map_location='cpu'#'cuda:0')
+
+# --------------------------------------------------
 def input_upload_or_selection():
     
     args = get_args()
@@ -130,10 +135,7 @@ def input_upload_or_selection():
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
     "EfficientNetB3", "EfficientNetB4", "MobileNetV3Small", "MobileNetV3SmallCustom", "MobileNetV3Large", "ResNet"))
     checkpoint_path = get_model_cyverse_path(model_name=model_name)
-    model = eval(model_name).load_from_checkpoint(
-        checkpoint_path,
-        # map_location='cpu'#'cuda:0'
-    )
+    model = load_model(model_name=model_name, checkpoint_path=checkpoint_path)
 
     # Select an image from the library or upload an image
     images = glob.glob(f'{args.image_directory}*.png')[:12]  # Replace with your actual image paths
