@@ -32,6 +32,13 @@ def get_args():
                         type=str,
                         default='crs_output')
 
+    parser.add_argument('-i',
+                        '--image_directory',
+                        help='Directory containing images',
+                        metavar='str',
+                        type=str,
+                        default='images/test_patches/')
+    
     return parser.parse_args()
 
 
@@ -108,13 +115,16 @@ def documentation():
         - [Fully Convolutional Network (FCN)](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt)
         - [DeepLabV3](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/DeepLabV3/lightning_logs/version_6/checkpoints/epoch%3D44-step%3D83385.ckpt)
 
-    **To use this app (*i*) select a model in the left sidebar, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
+    **To use this app: (*i*) select a model in the left sidebar, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
     """
     )
 
 
 # --------------------------------------------------
 def input_upload_or_selection():
+    
+    args = get_args()
+
     st.header("Input Upload or Selection")
     # Load model
     model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
@@ -126,7 +136,7 @@ def input_upload_or_selection():
     )
 
     # Select an image from the library or upload an image
-    images = glob.glob('images/test_patches/*.png')[:12]  # Replace with your actual image paths
+    images = glob.glob(f'{args.image_directory}*.png')[:12]  # Replace with your actual image paths
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
         image = imread(image_file)
