@@ -162,18 +162,47 @@ def input_upload_or_selection():
 
 
 # --------------------------------------------------
+# def model_results(image, prediction, model_name, execution_time):
+#     st.header("Model Results")
+#     st.success(f"Model ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
+#     args = get_args()
+    
+#     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
+#         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
+#         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+#         delete_directory(args.output_directory)
+#     else:
+#         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
+#         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
 def model_results(image, prediction, model_name, execution_time):
-    st.header("Model Results")
-    st.success(f"Model ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
+    # Create a placeholder for the header
+    header_placeholder = st.empty()
+    # Create a placeholder for the success message
+    success_placeholder = st.empty()
+    # Create a placeholder for the image
+    image_placeholder = st.empty()
+    # Create a placeholder for the classification
+    classification_placeholder = st.empty()
+
+    # Update the placeholders
+    header_placeholder.header("Model Results")
+    success_placeholder.success(f"Model ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
     args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-        st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+        image_placeholder.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         delete_directory(args.output_directory)
     else:
-        st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
-        st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+        image_placeholder.image(image, caption=f'{model_name} Prediction', use_column_width=True)
+        classification_placeholder.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+
+    # Clear the placeholders
+    header_placeholder.empty()
+    success_placeholder.empty()
+    image_placeholder.empty()
+    classification_placeholder.empty()
 
 
 # --------------------------------------------------
