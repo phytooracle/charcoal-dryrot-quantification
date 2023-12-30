@@ -165,7 +165,7 @@ def model_results(image, prediction, model_name):
         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         delete_directory(args.output_directory)
     else:
-        st.image(image)
+        st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
 
 
