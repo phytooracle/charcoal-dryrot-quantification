@@ -16,6 +16,7 @@ from PIL import Image
 from streamlit_image_select import image_select
 import glob
 import shutil
+import time
 
 
 # --------------------------------------------------
@@ -152,14 +153,18 @@ def input_upload_or_selection():
     if image is not None:
         # Run inference
         with st.spinner('Running model...'):
+            start_time = time.time()
             prediction = model.predict_single_image(image)
-        return image, prediction, model_name
+            end_time = time.time()
+            execution_time = end_time - start_time
+
+        return image, prediction, model_name, execution_time
 
 
 # --------------------------------------------------
-def model_results(image, prediction, model_name):
+def model_results(image, prediction, model_name, execution_time):
     st.header("Model Results")
-    st.success('Done!')
+    st.success(f'Model ran successfully! The prediction took {execution_time} seconds to run.')
     args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
@@ -194,8 +199,8 @@ def main():
     
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
     documentation()
-    image, prediction, model_name = input_upload_or_selection()
-    model_results(image=image, prediction=prediction, model_name=model_name)
+    image, prediction, model_name, execution_time = input_upload_or_selection()
+    model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time)
 
 
 # --------------------------------------------------
