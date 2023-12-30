@@ -162,38 +162,18 @@ def input_upload_or_selection():
 
 
 # --------------------------------------------------
-# def model_results(image, prediction, model_name, execution_time):
-#     st.header("Model Results")
-#     st.success(f"{model_name} ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
-#     args = get_args()
-    
-#     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
-#         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-#         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
-#         delete_directory(args.output_directory)
-#     else:
-#         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
-#         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-# Create placeholders at the start of your script
 def model_results(image, prediction, model_name, execution_time):
-    # Clear the placeholders at the start of the function
-    header_placeholder.empty()
-    success_placeholder.empty()
-    image_placeholder.empty()
-    classification_placeholder.empty()
-
-    # Update the placeholders
-    header_placeholder.header("Model Results")
-    success_placeholder.success(f"Model ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
+    st.header("Model Results")
+    st.success(f"{model_name} ran successfully! The prediction took {format(execution_time, '.2f')} seconds to run.")
     args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-        image_placeholder.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+        st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         delete_directory(args.output_directory)
     else:
-        image_placeholder.image(image, caption=f'{model_name} Prediction', use_column_width=True)
-        classification_placeholder.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+        st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
+        st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
 
 
 # --------------------------------------------------
@@ -214,13 +194,8 @@ def create_directory(directory_path):
 def main():
     """Make a jazz noise here"""
     args = get_args()
-
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
     documentation()
-    header_placeholder = st.empty()
-    success_placeholder = st.empty()
-    image_placeholder = st.empty()
-    classification_placeholder = st.empty()    
     image, prediction, model_name, execution_time = input_upload_or_selection()
     model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time)
 
