@@ -209,8 +209,10 @@ def model_results(image, prediction, model_name, execution_time):
         delete_directory(args.output_directory)
     else:
         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
-        st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-
+        presence = "True" if prediction==1 else "False"
+        # st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+        col1, col2, col3 = st.columns(3)
+        col2.metric(label="Presence of CRS", value=presence)
 
 # --------------------------------------------------
 def delete_directory(directory_path):
