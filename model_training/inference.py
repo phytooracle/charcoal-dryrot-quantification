@@ -205,7 +205,7 @@ def model_results(image, prediction, model_name, execution_time):
         col1, col2, col3 = st.columns(3)
         col1.metric(label="Processing Time", value=f"{execution_time:.2f} seconds")
         col2.metric(label="Presence of CRS", value=presence)
-        col3.metric(label="Percentage of Pixels Identified with CRS", value=f"{percentage:.2f}%")
+        col3.metric(label="Percentage of Pixels with CRS", value=f"{percentage:.2f}%")
         
         delete_directory(args.output_directory)
     else:
