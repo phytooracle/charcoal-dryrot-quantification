@@ -197,9 +197,14 @@ def model_results(image, prediction, model_name, execution_time):
         ones = np.count_nonzero(prediction)
         zeros = total_pixels - ones
         percentage = (ones / total_pixels) * 100
+
+        # Determine the presence of CRS
+        presence = "True" if percentage > 0 else "False"
         
-        # st.write(f"{percentage:.2f}% of pixels identified with CRS")
-        st.metric(label="Pixels with CRS", value=f"{percentage:.2f}%")
+        # Display the metrics in a more understandable format
+        col1, col2 = st.columns(2)
+        col1.metric(label="Presence of CRS", value=presence)
+        col2.metric(label="Percentage of Pixels Identified with CRS", value=f"{percentage:.2f}%")
         
         delete_directory(args.output_directory)
     else:
