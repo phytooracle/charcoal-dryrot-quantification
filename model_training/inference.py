@@ -148,12 +148,54 @@ def input_upload_or_selection():
     model = load_model(model_name=model_name, checkpoint_path=checkpoint_path)
 
     # Select an image from the library or upload an image
-    images = glob.glob(f'{args.image_directory}*.png')[:12]  # Replace with your actual image paths
+    # images = glob.glob(f'{args.image_directory}*.png')[:12]  # Replace with your actual image paths
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     if image_file is not None:
         image = imread(image_file)
     else:
-        selected_image = image_select("Select Image", images, use_container_width=False)
+        selected_image = image_select(
+            label="Select Image", 
+            images=[
+                f'{args.image_directory}IMG_0203-38.png',
+                f'{args.image_directory}IMG_0547-32.png',
+                f'{args.image_directory}IMG_0224-35.png',
+                f'{args.image_directory}IMG_0762-21.png',
+                f'{args.image_directory}IMG_0456-39.png',
+                f'{args.image_directory}IMG_0683-26.png',
+                f'{args.image_directory}IMG_0683-17.png',
+                f'{args.image_directory}IMG_0683-22.png',
+                f'{args.image_directory}IMG_0451-33.png',
+                f'{args.image_directory}IMG_0449-32.png',
+                f'{args.image_directory}IMG_0740-26.png',
+                f'{args.image_directory}IMG_0754-40.png',
+                f'{args.image_directory}IMG_0449-25.png',
+                f'{args.image_directory}IMG_0449-33.png',
+                f'{args.image_directory}IMG_0484-33.png',
+                f'{args.image_directory}IMG_0740-38.png'
+            ],
+            captions=[
+                'Plot stake',
+                'Plot stake',
+                'Control',
+                'Control',
+                'Control'
+                'No CRS',
+                'No CRS',
+                'No CRS',
+                'Major CRS',
+                'Major CRS',
+                'Major CRS',
+                'Major CRS',
+                'Major CRS',
+                'Minor CRS',
+                'Minor CRS',
+                'Minor CRS'
+
+
+
+
+            ]
+            use_container_width=False)
         if selected_image is not None:
             image = imread(selected_image)
 
