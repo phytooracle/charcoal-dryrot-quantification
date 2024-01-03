@@ -178,7 +178,7 @@ def input_upload_or_selection():
                 'Plot stake',
                 'Control',
                 'Control',
-                'Control'
+                'Control',
                 'No CRS',
                 'No CRS',
                 'No CRS',
