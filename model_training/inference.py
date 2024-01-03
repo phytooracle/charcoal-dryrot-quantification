@@ -203,7 +203,7 @@ def model_results(image, prediction, model_name, execution_time):
         
         # Display the metrics in a more understandable format
         col1, col2, col3 = st.columns(3)
-        col1.metric(label="Processing Time", value=f"{execution_time:.2f} seconds")
+        col1.metric(label="Processing Time", value=f"{execution_time:.2f} s")
         col2.metric(label="Presence of CRS", value=presence)
         col3.metric(label="Percentage of Pixels with CRS", value=f"{percentage:.2f}%")
         
@@ -213,7 +213,7 @@ def model_results(image, prediction, model_name, execution_time):
         presence = "True" if prediction==1 else "False"
         # st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
         col1, col2 = st.columns(2)
-        col1.metric(label="Processing Time", value=f"{execution_time:.2f} seconds")
+        col1.metric(label="Processing Time", value=f"{execution_time:.2f} s")
         col2.metric(label="Presence of CRS", value=presence)
 
 # --------------------------------------------------
