@@ -185,7 +185,7 @@ import numpy as np
 
 def model_results(image, prediction, model_name, execution_time):
     st.header("Model Results")
-    st.success(f"{model_name} successfully made a prediction in {format(execution_time, '.2f')} seconds.")
+    st.success(f"{model_name} successfully made a prediction.")
     args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
@@ -202,16 +202,18 @@ def model_results(image, prediction, model_name, execution_time):
         presence = "True" if percentage > 0 else "False"
         
         # Display the metrics in a more understandable format
-        col1, col2 = st.columns(2)
-        col1.metric(label="Presence of CRS", value=presence)
-        col2.metric(label="Percentage of Pixels Identified with CRS", value=f"{percentage:.2f}%")
+        col1, col2, col3 = st.columns(3)
+        col1.metric(label="Processing Time", value=f"{execution_time:.2f} seconds")
+        col2.metric(label="Presence of CRS", value=presence)
+        col3.metric(label="Percentage of Pixels Identified with CRS", value=f"{percentage:.2f}%")
         
         delete_directory(args.output_directory)
     else:
         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
         presence = "True" if prediction==1 else "False"
         # st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-        col1, col2, col3 = st.columns(3)
+        col1, col2 = st.columns(2)
+        col1.metric(label="Processing Time", value=f"{execution_time:.2f} seconds")
         col2.metric(label="Presence of CRS", value=presence)
 
 # --------------------------------------------------
