@@ -17,6 +17,7 @@ from streamlit_image_select import image_select
 import glob
 import shutil
 import time
+import numpy as np
 
 
 # --------------------------------------------------
@@ -76,7 +77,7 @@ def generate_plot(image, prediction, model):
 
     # Display the image in the first subplot
     axes[0].imshow(image)
-    axes[0].set_title('Image')
+    axes[0].set_title('Input Image')
     axes[0].tick_params(bottom=False, left=False, labelbottom=False, labelleft=False)  # Remove ticks and labels for axes[0]
 
     # Display the prediction in the second subplot
@@ -128,25 +129,38 @@ def documentation():
 def load_model(model_name, checkpoint_path):
     return eval(model_name).load_from_checkpoint(checkpoint_path) #, # map_location='cpu'#'cuda:0')
 
-# --------------------------------------------------
-def input_upload_or_selection():
-    
-    args = get_args()
 
+# --------------------------------------------------
+def select_model():
+
+    args = get_args()
+    
+    # Select model
+    model_name = st.sidebar.selectbox(
+        label="Select a Model", 
+        options=["S: DeepLabV3", "S: FCN", "S: UNET", "C: EfficientNetB3", "C: EfficientNetB4", "C: MobileNetV3Small", "C: MobileNetV3SmallCustom", "C: MobileNetV3Large", "C: ResNet"],
+        index=None,
+        placeholder="Select model...")
+
+    model = None
+    if model_name is not None:
+        # st.sidebar.write('You selected:', model_name)
+        model_name = model_name.split(' ')[-1]
+        checkpoint_path = get_model_cyverse_path(model_name=model_name)
+        model = load_model(model_name=model_name, checkpoint_path=checkpoint_path)
+
+    return model, model_name
+
+
+# --------------------------------------------------
+def input_upload_or_selection(model, model_name):
+    args = get_args()
+    
     st.header("Input Upload or Selection")
     st.markdown(
     """
     *To download the complete image patch test set and use it as input to the model, [click here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/images/test_images.zip).*
     """)
-    # Load model
-    model_name = st.sidebar.selectbox(
-        "Select a Model", 
-        ("S: DeepLabV3", "S: FCN", "S: UNET", "C: EfficientNetB3", "C: EfficientNetB4", "C: MobileNetV3Small", "C: MobileNetV3SmallCustom", "C: MobileNetV3Large", "C: ResNet"),
-        placeholder="Select model...")
-    st.sidebar.write('You selected:', model_name)
-    model_name = model_name.split(' ')[-1]
-    checkpoint_path = get_model_cyverse_path(model_name=model_name)
-    model = load_model(model_name=model_name, checkpoint_path=checkpoint_path)
 
     # Select an image from the library or upload an image
     # images = glob.glob(f'{args.image_directory}*.png')[:12]  # Replace with your actual image paths
@@ -155,39 +169,39 @@ def input_upload_or_selection():
         image = imread(image_file)
     else:
         selected_image = image_select(
-            label="Select Image", 
+            label="Select Image",
             images=[
                 f'{args.image_directory}IMG_0203-38.png',
                 f'{args.image_directory}IMG_0547-32.png',
-                f'{args.image_directory}IMG_0224-35.png',
-                f'{args.image_directory}IMG_0762-21.png',
+                f'{args.image_directory}IMG_0203-26.png',
+                f'{args.image_directory}IMG_0549-35.png',
                 f'{args.image_directory}IMG_0456-39.png',
-                f'{args.image_directory}IMG_0683-26.png',
+                f'{args.image_directory}IMG_0394-40.png',
                 f'{args.image_directory}IMG_0683-17.png',
                 f'{args.image_directory}IMG_0683-22.png',
                 f'{args.image_directory}IMG_0451-33.png',
                 f'{args.image_directory}IMG_0449-32.png',
-                f'{args.image_directory}IMG_0740-26.png',
+                f'{args.image_directory}IMG_0584-38.png',
                 f'{args.image_directory}IMG_0754-40.png',
-                f'{args.image_directory}IMG_0449-25.png',
-                f'{args.image_directory}IMG_0449-33.png',
+                f'{args.image_directory}IMG_0758-34.png',
+                f'{args.image_directory}IMG_0285-57.png',
                 f'{args.image_directory}IMG_0484-33.png',
                 f'{args.image_directory}IMG_0740-38.png'
             ],
             captions=[
-                'Plot stake',
-                'Plot stake',
                 'Control',
                 'Control',
                 'Control',
-                'No CRS',
-                'No CRS',
-                'No CRS',
+                'Control',
+                'No CRS - Healthy Plant Tissue',
+                'No CRS - Healthy Plant Tissue',
+                'No CRS - Deficient Plant Tissue',
+                'No CRS - Deficient Plant Tissue',
                 'Major CRS',
                 'Major CRS',
                 'Major CRS',
                 'Major CRS',
-                'Major CRS',
+                'Minor CRS',
                 'Minor CRS',
                 'Minor CRS',
                 'Minor CRS'
@@ -203,28 +217,14 @@ def input_upload_or_selection():
             prediction = model.predict_single_image(image)
             end_time = time.time()
             execution_time = end_time - start_time
-
+        st.success(f"{model_name} successfully made a prediction.")
         return image, prediction, model_name, execution_time
-
+    
 
 # --------------------------------------------------
-# def model_results(image, prediction, model_name, execution_time):
-#     st.header("Model Results")
-#     st.success(f"{model_name} successfully made a prediction in {format(execution_time, '.2f')} seconds.")
-#     args = get_args()
-    
-#     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
-#         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
-#         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
-#         delete_directory(args.output_directory)
-#     else:
-#         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
-#         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
-import numpy as np
-
 def model_results(image, prediction, model_name, execution_time):
     st.header("Model Results")
-    st.success(f"{model_name} successfully made a prediction.")
+    
     args = get_args()
     
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
@@ -238,22 +238,22 @@ def model_results(image, prediction, model_name, execution_time):
         percentage = (ones / total_pixels) * 100
 
         # Determine the presence of CRS
-        presence = "True" if percentage > 0 else "False"
+        presence = "Detected" if percentage > 0 else "Not Detected"
         
         # Display the metrics in a more understandable format
         col1, col2, col3 = st.columns(3)
         col1.metric(label="Processing Time", value=f"{execution_time:.2f} s")
-        col2.metric(label="Presence of CRS", value=presence)
+        col2.metric(label="CRS Detection Status", value=presence)
         col3.metric(label="Percentage of Pixels with CRS", value=f"{percentage:.2f}%")
         
         delete_directory(args.output_directory)
     else:
-        st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
-        presence = "True" if prediction==1 else "False"
+        st.image(image, caption=f'{model_name} Prediction', use_column_width=False)
+        presence = "Detected" if prediction==1 else "Not Detected"
         # st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
         col1, col2 = st.columns(2)
         col1.metric(label="Processing Time", value=f"{execution_time:.2f} s")
-        col2.metric(label="Presence of CRS", value=presence)
+        col2.metric(label="CRS Detection Status", value=presence)
 
 # --------------------------------------------------
 def delete_directory(directory_path):
@@ -275,8 +275,14 @@ def main():
     args = get_args()
     st.title("Charcoal Rot of Sorghum Classification & Segmentation App")
     documentation()
-    image, prediction, model_name, execution_time = input_upload_or_selection()
-    model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time)
+    model, model_name = select_model()
+
+    # Check if a model has been selected
+    if model is not None:
+        image, prediction, model_name, execution_time = input_upload_or_selection(model=model, model_name=model_name)
+        model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time)
+    else:
+        st.info("Please select a model from the left sidebar.")
 
 
 # --------------------------------------------------
