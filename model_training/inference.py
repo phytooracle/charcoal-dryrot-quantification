@@ -190,7 +190,7 @@ def input_upload_or_selection():
                 'Minor CRS',
                 'Minor CRS',
                 'Minor CRS'
-            ]
+            ],
             use_container_width=False)
         if selected_image is not None:
             image = imread(selected_image)
