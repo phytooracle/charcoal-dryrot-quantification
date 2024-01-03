@@ -139,8 +139,11 @@ def input_upload_or_selection():
     *To download the complete image patch test set and use it as input to the model, [click here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/images/test_images.zip).*
     """)
     # Load model
-    model_name = st.sidebar.selectbox("Select Model", ("UNET", "FCN", "DeepLabV3",
-    "EfficientNetB3", "EfficientNetB4", "MobileNetV3Small", "MobileNetV3SmallCustom", "MobileNetV3Large", "ResNet"))
+    model_name = st.sidebar.selectbox(
+        "Select a Model", 
+        ("UNET", "FCN", "DeepLabV3", "EfficientNetB3", "EfficientNetB4", "MobileNetV3Small", "MobileNetV3SmallCustom", "MobileNetV3Large", "ResNet"),
+        placeholder="Select model...")
+    st.sidebar.write('You selected:', model_name)
     checkpoint_path = get_model_cyverse_path(model_name=model_name)
     model = load_model(model_name=model_name, checkpoint_path=checkpoint_path)
 
@@ -166,6 +169,20 @@ def input_upload_or_selection():
 
 
 # --------------------------------------------------
+# def model_results(image, prediction, model_name, execution_time):
+#     st.header("Model Results")
+#     st.success(f"{model_name} successfully made a prediction in {format(execution_time, '.2f')} seconds.")
+#     args = get_args()
+    
+#     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
+#         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
+#         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+#         delete_directory(args.output_directory)
+#     else:
+#         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
+#         st.write('Classification: CRS positive' if prediction==1 else 'Classification: CRS negative')
+import numpy as np
+
 def model_results(image, prediction, model_name, execution_time):
     st.header("Model Results")
     st.success(f"{model_name} successfully made a prediction in {format(execution_time, '.2f')} seconds.")
@@ -174,6 +191,15 @@ def model_results(image, prediction, model_name, execution_time):
     if model_name in ['UNET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
+        
+        # Calculate the percentage of pixels with value 1 compared to those of value 0
+        total_pixels = prediction.size
+        ones = np.count_nonzero(prediction)
+        zeros = total_pixels - ones
+        percentage = (ones / total_pixels) * 100
+        
+        st.write(f"{percentage:.2f}% of pixels identified with CRS")
+        
         delete_directory(args.output_directory)
     else:
         st.image(image, caption=f'{model_name} Prediction', use_column_width=True)
