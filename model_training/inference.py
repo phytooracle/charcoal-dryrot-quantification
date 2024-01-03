@@ -198,7 +198,8 @@ def model_results(image, prediction, model_name, execution_time):
         zeros = total_pixels - ones
         percentage = (ones / total_pixels) * 100
         
-        st.write(f"{percentage:.2f}% of pixels identified with CRS")
+        # st.write(f"{percentage:.2f}% of pixels identified with CRS")
+        st.metric(label="Pixels with CRS", value=f"{percentage:.2f}%")
         
         delete_directory(args.output_directory)
     else:
