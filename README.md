@@ -99,7 +99,7 @@ Then, run the app:
 sudo docker exec crs streamlit run /opt/model_training/inference.py -- -i /opt/images/test_patches/ --server.port 8501
 ```
 
-Finally, you can interact with the application in your web browser by navigating to:[http://localhost:8501/](http://localhost:8501/)
+Finally, you can interact with the application in your web browser by navigating to: [http://localhost:8501/](http://localhost:8501/)
 
 ### Singularity
 First, build the container:
