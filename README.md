@@ -89,9 +89,17 @@ The models trained here can be deployed on a Streamlit app. The hosted app is ac
 </p>
 
 ### Docker
+First, pull the container:
 ```
-sudo docker run phytooracle/charcoal-dryrot-quantification:latest -- -i /opt/images/test_patches/
+sudo docker run -d -p 8501:8501 --name crs phytooracle/charcoal-dryrot-quantification:latest
 ```
+
+Then, run the app:
+```
+sudo docker exec crs streamlit run /opt/model_training/inference.py -- -i /opt/images/test_patches/ --server.port 8501
+```
+
+You can then access the app on your browser by going to: localhost:8501/
 
 ### Singularity
 First, build the container:
