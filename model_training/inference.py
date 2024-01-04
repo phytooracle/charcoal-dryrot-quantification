@@ -120,9 +120,10 @@ def documentation():
         - [FCN](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt)
         - [U-NET](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/UNET/lightning_logs/version_0/checkpoints/epoch%3D45-step%3D270894.ckpt)
         
-    **To use this app: (*i*) select a model, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
     """
     )
+
+    st.info("**To use this app: (*i*) select a model, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**")
 
 
 # --------------------------------------------------
@@ -154,6 +155,7 @@ def select_model():
 
     args = get_args()
     st.header("Select Model")
+    
     # Select model
     model_name = st.selectbox(
         label="Select a Model", 
@@ -176,7 +178,7 @@ def select_model():
 def input_upload_or_selection(model, model_name):
     args = get_args()
     
-    st.header("Input Upload or Selection")
+    st.header("Select or Upload Image")
     st.markdown(
     """
     *To download the complete image patch test set and use it as input to the model, [click here](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/images/test_images.zip).*
@@ -301,8 +303,8 @@ def main():
     if model is not None:
         image, prediction, model_name, execution_time = input_upload_or_selection(model=model, model_name=model_name)
         model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time)
-    else:
-        st.info("Please select a model.")
+    # else:
+    #     st.info("Please select a model.")
 
 
 # --------------------------------------------------
