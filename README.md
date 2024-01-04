@@ -83,6 +83,11 @@ model_training/quantification_and_plots/test_models_inference.ipynb
 ## Streamlit App
 The models trained here can be deployed on a Streamlit app. The hosted app is accessible [here](https://charcoal-dryrot-quantification.streamlit.app/). The app can also be executed locally by utilizing Docker/Singularity.
 
+<p align="center">
+  <img src="images/crs_figure.png" alt="Alt text" title="Optional title" style="display: block; margin-left: auto; margin-right: auto; width: 70%;" />
+  <div style="width: 50%; margin: auto;">Charcoal rot of sorghum (CRS) symptoms in sorghum plant grown in Maricopa, Arizona.</div>
+</p>
+
 ### Docker
 ```
 sudo docker run phytooracle/charcoal-dryrot-quantification:latest -- -i /opt/images/test_patches/
