@@ -153,9 +153,9 @@ def convert_names(model_name):
 def select_model():
 
     args = get_args()
-    
+    st.header("Select Model")
     # Select model
-    model_name = st.sidebar.selectbox(
+    model_name = st.selectbox(
         label="Select a Model", 
         options=["C: EfficientNet-B3", "C: EfficientNet-B4", "C: MobileNetV3 large", "C: MobileNetV3 small", "C: MobileNetV3 small custom", "C: ResNet18", "S: DeepLabV3", "S: FCN", "S: U-NET", ],
         index=None,
