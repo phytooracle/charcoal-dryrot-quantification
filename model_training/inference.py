@@ -52,15 +52,15 @@ def get_model_cyverse_path(model_name):
 
     model_path_dictionary = {
         'FCN': os.path.join(base_path, 'FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt'), 
-        'UNET': os.path.join(base_path, 'UNET/lightning_logs/version_0/checkpoints/epoch%3D45-step%3D270894.ckpt'),
+        'U-NET': os.path.join(base_path, 'UNET/lightning_logs/version_0/checkpoints/epoch%3D45-step%3D270894.ckpt'),
         'DeepLabV3': os.path.join(base_path, 'DeepLabV3/lightning_logs/version_6/checkpoints/epoch%3D44-step%3D83385.ckpt'), #'DeepLabV3/lightning_logs/version_0/checkpoints/epoch%3D45-step%3D270894.ckpt'),
         
-        'EfficientNetB4': os.path.join(base_path, 'EfficientNetB4/lightning_logs/version_0/checkpoints/epoch%3D2-step%3D17667.ckpt'),
-        'MobileNetV3Large': os.path.join(base_path, 'MobileNetV3Large/lightning_logs/version_0/checkpoints/epoch%3D10-step%3D64779.ckpt'),
-        'MobileNetV3SmallCustom': os.path.join(base_path, 'MobileNetV3SmallCustom/lightning_logs/version_0/checkpoints/epoch%3D6-step%3D41223.ckpt'),
-        'EfficientNetB3': os.path.join(base_path, 'EfficientNetB3/lightning_logs/version_0/checkpoints/epoch%3D9-step%3D58890.ckpt'),
-        'MobileNetV3Small': os.path.join(base_path, 'MobileNetV3Small/lightning_logs/version_0/checkpoints/epoch%3D7-step%3D47112.ckpt'),
-        'ResNet': os.path.join(base_path, 'ResNet/lightning_logs/version_0/checkpoints/epoch%3D11-step%3D70668.ckpt')
+        'EfficientNet-B4': os.path.join(base_path, 'EfficientNetB4/lightning_logs/version_0/checkpoints/epoch%3D2-step%3D17667.ckpt'),
+        'MobileNetV3 large': os.path.join(base_path, 'MobileNetV3Large/lightning_logs/version_0/checkpoints/epoch%3D10-step%3D64779.ckpt'),
+        'MobileNetV3 small custom': os.path.join(base_path, 'MobileNetV3SmallCustom/lightning_logs/version_0/checkpoints/epoch%3D6-step%3D41223.ckpt'),
+        'EfficientNet-B3': os.path.join(base_path, 'EfficientNetB3/lightning_logs/version_0/checkpoints/epoch%3D9-step%3D58890.ckpt'),
+        'MobileNetV3 small': os.path.join(base_path, 'MobileNetV3Small/lightning_logs/version_0/checkpoints/epoch%3D7-step%3D47112.ckpt'),
+        'ResNet18': os.path.join(base_path, 'ResNet/lightning_logs/version_0/checkpoints/epoch%3D11-step%3D70668.ckpt')
         }
 
     return model_path_dictionary[model_name]
@@ -108,17 +108,18 @@ def documentation():
     This app allows you to run various classification and segmentation machine learning models that identify 
     and quanitfy CRS. Each trained model can be downloaded by clicking on the model name below:
     - Classification
-        - [ResNet18](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/ResNet/lightning_logs/version_0/checkpoints/epoch%3D11-step%3D70668.ckpt)
-        - [MobileNetV3 small](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/MobileNetV3Small/lightning_logs/version_0/checkpoints/epoch%3D7-step%3D47112.ckpt)
-        - [MobileNetV3 small custom](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/MobileNetV3SmallCustom/lightning_logs/version_0/checkpoints/epoch%3D6-step%3D41223.ckpt)
-        - [MobileNetV3 large](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/MobileNetV3Large/lightning_logs/version_0/checkpoints/epoch%3D10-step%3D64779.ckpt)
         - [EfficientNet-B3](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/EfficientNetB3/lightning_logs/version_0/checkpoints/epoch%3D9-step%3D58890.ckpt)
         - [EfficientNet-B4](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/EfficientNetB4/lightning_logs/version_0/checkpoints/epoch%3D2-step%3D17667.ckpt)
-    - Segmentation
-        - [U-NET](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/UNET/lightning_logs/version_0/checkpoints/epoch%3D45-step%3D270894.ckpt)
-        - [Fully Convolutional Network (FCN)](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt)
-        - [DeepLabV3](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/DeepLabV3/lightning_logs/version_6/checkpoints/epoch%3D44-step%3D83385.ckpt)
+        - [MobileNetV3 large](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/MobileNetV3Large/lightning_logs/version_0/checkpoints/epoch%3D10-step%3D64779.ckpt)
+        - [MobileNetV3 small](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/MobileNetV3Small/lightning_logs/version_0/checkpoints/epoch%3D7-step%3D47112.ckpt)
+        - [MobileNetV3 small custom](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/MobileNetV3SmallCustom/lightning_logs/version_0/checkpoints/epoch%3D6-step%3D41223.ckpt)
+        - [ResNet18](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/ResNet/lightning_logs/version_0/checkpoints/epoch%3D11-step%3D70668.ckpt)
 
+    - Segmentation
+        - [DeepLabV3](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/DeepLabV3/lightning_logs/version_6/checkpoints/epoch%3D44-step%3D83385.ckpt)
+        - [FCN](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt)
+        - [U-NET](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/UNET/lightning_logs/version_0/checkpoints/epoch%3D45-step%3D270894.ckpt)
+        
     **To use this app: (*i*) select a model in the left sidebar, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
     """
     )
@@ -127,7 +128,25 @@ def documentation():
 # --------------------------------------------------
 @st.cache_resource
 def load_model(model_name, checkpoint_path):
+    model_name = convert_names(model_name)
     return eval(model_name).load_from_checkpoint(checkpoint_path) #, # map_location='cpu'#'cuda:0')
+
+
+# --------------------------------------------------
+def convert_names(model_name):
+    model_name_dict = {
+        'DeepLabV3': 'DeepLabV3',
+        'FCN': 'FCN',
+        'U-NET': 'UNET',
+        'EfficientNet-B3': 'EfficientNetB3',
+        'EfficientNet-B4': 'EfficientNetB4',
+        'MobileNetV3 small': 'MobileNetV3Small',
+        'MobileNetV3 small custom': 'MobileNetV3SmallCustom',
+        'MobileNetV3 large': 'MobileNetV3Large',
+        'ResNet18': 'ResNet'
+    }
+
+    return model_name_dict[model_name]
 
 
 # --------------------------------------------------
@@ -138,14 +157,15 @@ def select_model():
     # Select model
     model_name = st.sidebar.selectbox(
         label="Select a Model", 
-        options=["S: DeepLabV3", "S: FCN", "S: UNET", "C: EfficientNetB3", "C: EfficientNetB4", "C: MobileNetV3Small", "C: MobileNetV3SmallCustom", "C: MobileNetV3Large", "C: ResNet"],
+        options=["C: EfficientNet-B3", "C: EfficientNet-B4", "C: MobileNetV3 large", "C: MobileNetV3 small", "C: MobileNetV3 small custom", "C: ResNet18", "S: DeepLabV3", "S: FCN", "S: U-NET", ],
         index=None,
         placeholder="Select model...")
 
     model = None
     if model_name is not None:
         # st.sidebar.write('You selected:', model_name)
-        model_name = model_name.split(' ')[-1]
+        # model_name = model_name.split(' ')[-1]
+        model_name = ' '.join(model_name.split(' ')[1:])
         checkpoint_path = get_model_cyverse_path(model_name=model_name)
         model = load_model(model_name=model_name, checkpoint_path=checkpoint_path)
 
@@ -227,7 +247,7 @@ def model_results(image, prediction, model_name, execution_time):
     
     args = get_args()
     
-    if model_name in ['UNET', 'FCN', 'DeepLabV3']:
+    if model_name in ['U-NET', 'FCN', 'DeepLabV3']:
         result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
         st.image(imread(result_image_path), caption=f'{model_name} Prediction', use_column_width=True)
         
