@@ -79,3 +79,22 @@ We also provide a Jupyter notebook to visually assess the trained model's predic
 ```
 model_training/quantification_and_plots/test_models_inference.ipynb
 ```
+
+## Streamlit App
+The models trained here can be deployed on a Streamlit app. The hosted app is accessible [here](https://charcoal-dryrot-quantification.streamlit.app/). The app can also be executed locally by utilizing Docker/Singularity.
+
+### Docker
+```
+sudo docker run phytooracle/charcoal-dryrot-quantification:latest -- -i /opt/images/test_patches/
+```
+
+### Singularity
+First, build the container:
+```
+singularity build crs.simg docker://phytooracle/charcoal-dryrot-quantification:latest
+```
+
+Then, run the app:
+```
+singularity exec -B $(pwd):/mnt --pwd /mnt --nv crs.simg streamlit run inference.py -- -i /opt/images/test_patches/
+```
