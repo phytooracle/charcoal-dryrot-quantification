@@ -302,7 +302,7 @@ def main():
         image, prediction, model_name, execution_time = input_upload_or_selection(model=model, model_name=model_name)
         model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time)
     else:
-        st.info("Please select a model from the left sidebar.")
+        st.info("Please select a model.")
 
 
 # --------------------------------------------------
