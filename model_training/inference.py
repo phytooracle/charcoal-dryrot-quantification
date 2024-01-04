@@ -120,7 +120,7 @@ def documentation():
         - [FCN](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/FCN/lightning_logs/version_0/checkpoints/epoch%3D41-step%3D247338.ckpt)
         - [U-NET](https://data.cyverse.org/dav-anon/iplant/projects/phytooracle/papers/CharcoalRotSorghum/model_checkpoints/UNET/lightning_logs/version_0/checkpoints/epoch%3D45-step%3D270894.ckpt)
         
-    **To use this app: (*i*) select a model in the left sidebar, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
+    **To use this app: (*i*) select a model, (*ii*) select or upload an image, (*iii*) scroll down to the model results.**
     """
     )
 
