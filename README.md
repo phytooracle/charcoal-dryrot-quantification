@@ -99,7 +99,7 @@ Then, run the app:
 sudo docker exec crs streamlit run /opt/model_training/inference.py -- -i /opt/images/test_patches/ --server.port 8501
 ```
 
-Finally, you can interact with the application in your web browser by navigating to: [localhost:8501/](localhost:8501/)
+Finally, you can interact with the application in your web browser by navigating to: ```localhost:8501/```
 
 ### Singularity
 First, build the container:
@@ -112,4 +112,4 @@ Then, run the app:
 singularity exec -B $(pwd):/mnt --pwd /mnt --nv crs.simg streamlit run inference.py -- -i /opt/images/test_patches/
 ```
 
-Finally, you can interact with the application in your web browser by navigating to: [localhost:8501/](localhost:8501/)
+Finally, you can interact with the application in your web browser by navigating to: ```localhost:8501/```
