@@ -65,7 +65,7 @@ def get_model_cyverse_path(model_name):
 
     
 # --------------------------------------------------
-def generate_plot(image, prediction, model):
+def generate_plot(image, prediction, model, id):
 
     args = get_args()
     create_directory(directory_path=args.output_directory)
@@ -85,7 +85,7 @@ def generate_plot(image, prediction, model):
     axes[1].tick_params(bottom=False, left=False, labelbottom=False, labelleft=False)  # Remove ticks and labels for axes[1]
 
     # Save the plot
-    plt.savefig(f'{args.output_directory}/output_{model}.png', dpi=900, facecolor='white', edgecolor='white', bbox_inches='tight')
+    plt.savefig(f'{args.output_directory}/{id}_{model}_crs_prediction.png', dpi=900, facecolor='white', edgecolor='white', bbox_inches='tight')
 
     # # Show the plot
     # plt.show()
@@ -156,13 +156,13 @@ def run_model(model, model_name, image_path):
     
 
 # --------------------------------------------------
-def model_results(image, prediction, model_name, execution_time):
+def model_results(image, prediction, model_name, execution_time, id):
     
     args = get_args()
     create_directory(directory_path=args.output_directory)
     
     if model_name in ['U-NET', 'FCN', 'DeepLabV3']:
-        result_image_path = generate_plot(image=image, prediction=prediction, model=model_name)
+        result_image_path = generate_plot(image=image, prediction=prediction, model=model_name, id=id)
         
         # Calculate the percentage of pixels with value 1 compared to those of value 0
         total_pixels = prediction.size
@@ -210,6 +210,8 @@ def main():
 
     result_dict = {}
     cnt = 0
+    id = os.path.splitext(os.path.basename(args.image_path))[0]
+
     for model_name in ["C: EfficientNet-B3", "C: EfficientNet-B4", "C: MobileNetV3 large", "C: MobileNetV3 small", "C: MobileNetV3 small custom", "C: ResNet18", "S: DeepLabV3", "S: FCN", "S: U-NET", ]:
         cnt += 1
         model_name = ' '.join(model_name.split(' ')[1:])
@@ -217,12 +219,12 @@ def main():
         model = load_model(model_name=model_name, checkpoint_path=checkpoint_path)
         if model is not None:
             image, prediction, model_name, execution_time = run_model(model=model, model_name=model_name, image_path=args.image_path)
-            result = model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time)
+            result = model_results(image=image, prediction=prediction, model_name=model_name, execution_time=execution_time, id=id)
             result_dict[cnt] = result
     
     result_df = pd.DataFrame.from_dict(result_dict, orient='index')
     result_df = result_df.fillna('NA')
-    result_df.to_csv(os.path.join(args.output_directory, 'crs_results.csv'), index=False)
+    result_df.to_csv(os.path.join(args.output_directory, f'{id}_crs_result.csv'), index=False)
 
 
 # --------------------------------------------------
